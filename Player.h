@@ -13,24 +13,25 @@ protected:
 	sf::String mInputtedText;
 	sf::RectangleShape mTextUnderline;
 	unsigned int minutes, movesCounter, matchingCards;
-	std::shared_ptr<TextNode> name, playerName, hud, result, star;
+	sPtr<TextNode> name, playerName, hud, result, star;
 	
 public:
 	Player();
 
 	friend class Deck;
+
 	virtual void initialize();
+
+	void playerInput(sf::Event& Event);
+	void clearPlayerInput();
+	void rating();
+	void drawHud();	
+	void drawResult();
+	void resetScore();
 
 	int allMatching();
 
-	void rating();   
-	void resetScore();
-	void clearPlayerInput();
-	void playerInput(sf::Event& Event);
-	void drawHud(sf::RenderWindow& window);	
-	void drawResult(sf::RenderWindow& window);
-
-	virtual void draw(sf::RenderWindow& window);
+	virtual void draw();
 	virtual void update(sf::Time& elapsedTime, unsigned int seconds);
 	
 	~Player();

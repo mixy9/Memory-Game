@@ -17,7 +17,7 @@ SoundManager* SoundManager::getInstance()
 	return instance;
 }
 
-void SoundManager::createSound(Resource::ID id, std::string filename)
+void SoundManager::playSound(Resource::ID id, std::string filename)
 {
 	soundBuffer.load(id, filename);
 	sound.setBuffer(*soundBuffer.get(filename));
@@ -31,7 +31,7 @@ void SoundManager::playMusic(std::string filename)
 	if (isPlaying())
 	{
 		if (!music.openFromFile(filename))
-			throw std::runtime_error("Error! Failed to open music file " + filename);
+			throw std::runtime_error("Error! Failed to open file " + filename);
 		music.play();
 		music.setVolume(20);
 		music.setLoop(true);		

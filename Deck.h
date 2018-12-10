@@ -10,26 +10,27 @@ class Deck : public Card
 private:
 	unsigned int mRows, mNumberOfCards;
 	std::vector<sPtr<Card>> cards;
-	Card* arr[2];
-	
+	Card* cardPick[2];
+
 public:
 
 	Deck();
-	
+
 	void addCard(sPtr<sf::Sprite>& sprite, size_t number);
-	virtual void initialize();
 	void display();
 	void resetCards();
 	void shuffleCards();
 
 	Card* clickCard(sf::Vector2f& mousePosition);
 
-	bool pickCards(Card* card, Player& player);
-	bool chechMatching(Player& player);
+	bool pickCards(Card* card, Player& player, sf::Time &elapsedTime);
+	bool chechMatching(Player& player, sf::Time &elapsedTime);
 
+	void drawDeck();
 	void clearChoices();
-	void drawDeck(sf::RenderWindow& window);
-	virtual void update(sf::Vector2f& mousePosition);	
+
+	virtual void initialize();
+	virtual void update(sf::Vector2f& mousePosition);
 
 	~Deck();
 };

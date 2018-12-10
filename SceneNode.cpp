@@ -6,7 +6,7 @@ SceneNode::SceneNode()
 {
 }
 
-void SceneNode::update(sf::Time &elapsedTime)
+void SceneNode::update()
 {
 	// Do nothing by default
 }

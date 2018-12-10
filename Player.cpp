@@ -10,7 +10,7 @@ Player::Player() :
 
 void Player::initialize()
 {	
-	mTextUnderline.setPosition(sf::Vector2f(screenWidth / 2.5f, screenHeight / 1.6f));
+	mTextUnderline.setPosition(sf::Vector2f(Main::screenWidth / 2.5f, Main::screenHeight / 1.6f));
 	mTextUnderline.setSize(sf::Vector2f(400.f, 2.5f));
 	mTextUnderline.setFillColor(sf::Color::White);
 
@@ -24,9 +24,24 @@ void Player::initialize()
 	star->setOutlineColor(sf::Color::White);
 }
 
-int Player::allMatching()
+void Player::playerInput(sf::Event& Event)
 {
-	return matchingCards == 12;
+	// Handle ASCII characters only
+	char uCode = Event.text.unicode;
+	if (uCode >= 48 && uCode <= 122 && mInputtedText.getSize() < 9) // Maximum 9 characters
+	{
+		mInputtedText += uCode;
+	}
+	// Delete characters using the backspace key
+	else if (uCode == 8 && mInputtedText.getSize() > 0) {
+		mInputtedText.erase(mInputtedText.getSize() - 1, mInputtedText.getSize());
+	}
+}
+
+void Player::clearPlayerInput()
+{
+	// Clear the inputted text and enter a new name
+	mInputtedText.clear();
 }
 
 void Player::rating()
@@ -44,55 +59,40 @@ void Player::rating()
 	star->setString(rating.str());
 }
 
+void Player::drawHud()
+{
+	playerName->setCharacterSize(50u);
+	playerName->setPosition(sf::Vector2f(Main::screenWidth / 25, Main::screenHeight / 9.5));
+	Main::window.draw(*playerName);
+	Main::window.draw(*hud);
+}
+
+void Player::drawResult()
+{
+	playerName->setCharacterSize(80u);
+	playerName->setPosition(sf::Vector2f(Main::screenWidth / 1.7f, Main::screenHeight / 3.4f));
+	Main::window.draw(*playerName);
+	Main::window.draw(*result);
+	Main::window.draw(*star);
+}
+
 void Player::resetScore()
 {
 	minutes = 0; movesCounter = 0; matchingCards = 0;
 }
 
-void Player::clearPlayerInput()
+int Player::allMatching()
 {
-	// Clear the inputted text and enter a new name
-	mInputtedText.clear();
+	return matchingCards == 12;
 }
 
-void Player::playerInput(sf::Event& Event)
+void Player::draw()
 {
-	// Handle ASCII characters only
-	char uCode = Event.text.unicode;
-	if (uCode >= 48 && uCode <= 122 && mInputtedText.getSize() < 9) // Maximum 9 characters
-	{
-		mInputtedText += uCode;
-	}
-	// Delete characters using the backspace key
-	else if (uCode == 8 && mInputtedText.getSize() > 0) {
-		mInputtedText.erase(mInputtedText.getSize() - 1, mInputtedText.getSize());
-	}
-}
-
-void Player::drawHud(sf::RenderWindow& window)
-{
-	playerName->setCharacterSize(50u);
-	playerName->setPosition(sf::Vector2f(screenWidth / 25, screenHeight / 9.5));
-	window.draw(*playerName);
-	window.draw(*hud);
-}
-
-void Player::drawResult(sf::RenderWindow& window)
-{
-	playerName->setCharacterSize(80u);
-	playerName->setPosition(sf::Vector2f(screenWidth / 1.7f, screenHeight / 3.4f));
-	window.draw(*playerName);
-	window.draw(*result);
-	window.draw(*star);
-}
-
-void Player::draw(sf::RenderWindow& window)
-{
-	playerName->setPosition(sf::Vector2f(screenWidth / 2.4f, screenHeight / 2.f));
+	playerName->setPosition(sf::Vector2f(Main::screenWidth / 2.4f, Main::screenHeight / 2.f));
 	playerName->setString(mInputtedText);
-	window.draw(mTextUnderline);
-	window.draw(*playerName);
-	window.draw(*name);
+	Main::window.draw(mTextUnderline);
+	Main::window.draw(*playerName);
+	Main::window.draw(*name);
 }
 
 void Player::update(sf::Time& elapsedTime, unsigned int seconds)

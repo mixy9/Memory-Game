@@ -27,7 +27,7 @@ private:
 public:
 	static SoundManager* getInstance();	
 
-	void createSound(Resource::ID id, std::string filename);
+	void playSound(Resource::ID id, std::string filename);
 	void playMusic(std::string filename);
 	void pauseMusic();
 	void stopMusic();

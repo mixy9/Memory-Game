@@ -4,6 +4,7 @@
 #include "SceneNode.h"
 
 
+
 class Card : public SceneNode
 {
 protected:
@@ -11,6 +12,7 @@ protected:
 	std::string frontCardTexture;
 	sPtr<sf::Sprite> mSprite;
 	bool mShowCard{ false };
+	sf::Clock clock;
 	size_t mNumber;
 
 public:
@@ -18,15 +20,18 @@ public:
 	Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber);
 	
 	sf::Sprite& getSprite();
+
 	void setPosition(float posX, float posY);
+	void animateCardFlip(sf::Time &elapsedTime);
 
 	bool show();
 	bool hide();
+
 	int getNumber();
-	
-	virtual void update() {};
+
+	virtual void draw();
 	virtual void initialize() {};
-	virtual void draw(sf::RenderWindow& window);
+	virtual void update(sf::Time &elapsedTime);
 
 	~Card();
 };
