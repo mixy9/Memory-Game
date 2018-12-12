@@ -24,7 +24,8 @@ public:
 	Card* clickCard(sf::Vector2f& mousePosition);
 
 	bool pickCards(Card* card, Player& player, sf::Time &elapsedTime);
-	bool chechMatching(Player& player, sf::Time &elapsedTime);
+	bool matched(Player& player, sf::Time &elapsedTime);
+	bool unmatched(Player& player, sf::Time &elapsedTime);
 
 	void drawDeck();
 	void clearChoices();

@@ -13,7 +13,7 @@ private:
 	ResourceHolder<sf::Texture> Textures;	
 	std::vector<sPtr<TextNode>> menuButtons;
 	sPtr<TextNode> okay, quit, play, game, title, repeat, theEnd;
-	sPtr<SpriteNode> menuSprite, backgroundSprite, soundSprite, noSoundSprite;
+	sPtr<SpriteNode> menuSprite, backgroundSprite, introBG, soundSprite, noSoundSprite;
 
 	sf::Vector2f mouseWorldPosition;
 	sf::Vector2i mouseScreenPosition;

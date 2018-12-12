@@ -35,9 +35,9 @@ void Card::setPosition(float posX, float posY)
 void Card::animateCardFlip(sf::Time &elapsedTime)
 {
 	sf::Time currentTime = sf::Time::Zero;
-	const sf::Time spinTime = sf::milliseconds(500);
-	const sf::Time halfSpinTime = spinTime / 4.f;
-	sf::Time delta = clock.restart(); 
+	const sf::Time spinTime = sf::milliseconds(400);
+	const sf::Time halfSpinTime = spinTime / 3.f;
+	sf::Time delta = clock.restart();
 	if (mShowCard == false)
 	{
 		if (currentTime < spinTime - delta)
@@ -45,14 +45,14 @@ void Card::animateCardFlip(sf::Time &elapsedTime)
 		else {
 			currentTime = spinTime;
 		}
-	} 
+	}
 	mShowCard = currentTime >= halfSpinTime;
 	if (mShowCard) {
 		float scale = (currentTime - halfSpinTime) / halfSpinTime;
 		mSprite->setScale(std::sin(scale * PI() / 2) * Main::cardWidht, Main::cardHeight);
 		this->hide();
 	}
-	else {
+	else {  
 		float scale = 1.f - currentTime / halfSpinTime;
 		mSprite->setScale(std::sin(scale * PI() / 2) * Main::cardWidht, Main::cardHeight);
 		this->show();

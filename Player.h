@@ -4,12 +4,14 @@
 #include "ResourceHolder.h"
 #include "TextNode.h"
 #include "SceneNode.h"
+#include "SpriteNode.h"
+
 
 
 
 class Player :  public SceneNode
 {
-protected:	
+protected:
 	sf::String mInputtedText;
 	sf::RectangleShape mTextUnderline;
 	unsigned int minutes, movesCounter, matchingCards;

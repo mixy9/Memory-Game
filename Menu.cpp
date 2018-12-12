@@ -15,6 +15,9 @@ void Menu::initialize()
 	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Main::screenWidth, Main::screenHeight, NULL, NULL);
 	backgroundSprite->setScale(Main::screenWidth / backgroundSprite->getLocalBounds().width,
 	                           Main::screenHeight / backgroundSprite->getLocalBounds().height); 
+	introBG = std::make_shared<SpriteNode>(Filename::introBG, Main::screenWidth, Main::screenHeight, NULL, NULL);
+	introBG->setScale(Main::screenWidth / introBG->getLocalBounds().width,
+		              Main::screenHeight / introBG->getLocalBounds().height);
 
 	okay = std::make_shared<TextNode>("OK", 110u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
 	quit = std::make_shared<TextNode>("Quit", 75u, 2.3f, 1.36f, sf::Color::White, Filename::font2);

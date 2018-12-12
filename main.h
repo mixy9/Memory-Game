@@ -29,11 +29,13 @@ namespace Filename
 	const std::string menu("Graphics/menu.png");
 	const std::string sound("Graphics/sound.png");
 	const std::string noSound("Graphics/nsnd.png");
+	const std::string introBG("Graphics/introBG.jpg");
 	const std::string backCard("Graphics/backCard.png");
 	const std::string background("Graphics/background.jpg");
 
 	// Audio:
 	const std::string cardFlip("Audio/cardFlip.wav");
+	const std::string matchCards("Audio/matchSound.wav");
 	const std::string clickSound("Audio/mouseClick.wav");
 	const std::string musicFilename("Audio/musicRanch.ogg");
 }

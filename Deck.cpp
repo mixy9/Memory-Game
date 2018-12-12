@@ -65,7 +65,7 @@ Card* Deck::clickCard(sf::Vector2f& mousePosition)
 }
 
 bool Deck::pickCards(Card* card, Player& player, sf::Time &elapsedTime)
-{
+{ 
 	if (cardPick[0] == nullptr)
 	{
 		cardPick[0] = card;
@@ -75,12 +75,12 @@ bool Deck::pickCards(Card* card, Player& player, sf::Time &elapsedTime)
 	{
 		cardPick[1] = card;
 		card->animateCardFlip(elapsedTime);
-		player.movesCounter++;
-	}
+		player.movesCounter++; 
+	} 
 	else return false;
 }
 
-bool Deck::chechMatching(Player& player, sf::Time &elapsedTime)
+bool Deck::matched(Player& player, sf::Time &elapsedTime)
 {
 	if (cardPick[0] != nullptr && cardPick[1] != nullptr)
 	{
@@ -88,12 +88,23 @@ bool Deck::chechMatching(Player& player, sf::Time &elapsedTime)
 		{
 			cardPick[0]->show();
 			cardPick[1]->show();
-			player.matchingCards++;
-		}
-		else if (cardPick[0]->getNumber() != cardPick[1]->getNumber()) { 
+			player.matchingCards++; 
+			SoundManager::getInstance()->playSound(Resource::Sound, Filename::matchCards);
+		} 
+	}
+	return false;
+}
+
+bool Deck::unmatched(Player& player, sf::Time &elapsedTime)
+{
+	if (cardPick[0] != nullptr && cardPick[1] != nullptr)
+	{
+		if (cardPick[0]->getNumber() != cardPick[1]->getNumber()) {
 			cardPick[0]->hide();
-			cardPick[1]->hide();
-		}
+			//cardPick[0]->animateCardFlip(elapsedTime);
+			//cardPick[1]->animateCardFlip(elapsedTime);
+			cardPick[1]->hide(); 
+		}  
 	}
 	return true;
 }

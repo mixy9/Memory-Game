@@ -17,7 +17,7 @@ void Player::initialize()
 	name = std::make_shared<TextNode>("Player: ", 80u, 4.1f, 2.f, sf::Color::White, Filename::font2);
 	playerName = std::make_shared<TextNode>("", 80u, NULL, NULL, sf::Color(121, 77, 36), Filename::font2);
 	result = std::make_shared<TextNode>("", 50u, 3.7f, 2.3f, sf::Color::White, Filename::font2);
-	hud = std::make_shared<TextNode>("", 35u, 25.f, 5.f, sf::Color::White, Filename::font2);
+	hud = std::make_shared<TextNode>("", 35u, 25.f, 5.f, sf::Color(121, 77, 36), Filename::font2);
 	star = std::make_shared<TextNode>("", 120u, 2.5f, 2.f, sf::Color(255, 173, 51), Filename::font2);
 
 	star->setOutlineThickness(2.f);

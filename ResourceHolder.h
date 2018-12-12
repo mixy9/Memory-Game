@@ -3,7 +3,6 @@
 
 
 
-
 namespace Resource
 {
 	enum ID
