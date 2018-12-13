@@ -92,7 +92,7 @@ bool Deck::matched(Player& player, sf::Time &elapsedTime)
 			SoundManager::getInstance()->playSound(Resource::Sound, Filename::matchCards);
 		} 
 	}
-	return false;
+	return true;
 }
 
 bool Deck::unmatched(Player& player, sf::Time &elapsedTime)
@@ -101,8 +101,6 @@ bool Deck::unmatched(Player& player, sf::Time &elapsedTime)
 	{
 		if (cardPick[0]->getNumber() != cardPick[1]->getNumber()) {
 			cardPick[0]->hide();
-			//cardPick[0]->animateCardFlip(elapsedTime);
-			//cardPick[1]->animateCardFlip(elapsedTime);
 			cardPick[1]->hide(); 
 		}  
 	}
