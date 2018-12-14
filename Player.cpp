@@ -16,11 +16,11 @@ void Player::initialize()
 
 	paper = std::make_unique<SpriteNode>(Filename::paper, 38.f, 16.f, Main::screenWidth / 1.f, Main::screenHeight / 0.9f);
 
-	name = std::make_shared<TextNode>("Player: ", 80u, 4.1f, 2.f, sf::Color::White, Filename::font2);
-	playerName = std::make_shared<TextNode>("", 80u, NULL, NULL, sf::Color(121, 77, 36), Filename::font2);
-	result = std::make_shared<TextNode>("", 50u, 3.7f, 2.3f, sf::Color::White, Filename::font2);
-	hud = std::make_shared<TextNode>("", 33u, 18.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
-	star = std::make_shared<TextNode>("", 120u, 2.5f, 2.f, sf::Color(255, 173, 51), Filename::font2);
+	name = std::make_shared<TextNode>("Player: ", 17u, 4.1f, 2.f, sf::Color::White, Filename::font2);
+	playerName = std::make_shared<TextNode>("", 17u, NULL, NULL, sf::Color(121, 77, 36), Filename::font2);
+	result = std::make_shared<TextNode>("", 27u, 3.7f, 2.3f, sf::Color::White, Filename::font2);
+	hud = std::make_shared<TextNode>("", 41u, 18.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
+	star = std::make_shared<TextNode>("", 11u, 2.5f, 2.f, sf::Color(255, 173, 51), Filename::font2);
 
 	star->setOutlineThickness(2.f);
 	star->setOutlineColor(sf::Color::White);
@@ -63,7 +63,7 @@ void Player::rating()
 
 void Player::drawHud()
 {
-	playerName->setCharacterSize(50u);
+	playerName->setCharacterSize(Main::screenWidth / 27u);
 	playerName->setPosition(sf::Vector2f(Main::screenWidth / 18.f, Main::screenHeight / 7.5f));
 	Main::window.draw(*paper);
 	Main::window.draw(*playerName);
@@ -72,7 +72,7 @@ void Player::drawHud()
 
 void Player::drawResult()
 {
-	playerName->setCharacterSize(80u);
+	playerName->setCharacterSize(Main::screenWidth / 17u);
 	playerName->setPosition(sf::Vector2f(Main::screenWidth / 1.7f, Main::screenHeight / 3.4f));
 	Main::window.draw(*playerName);
 	Main::window.draw(*result);

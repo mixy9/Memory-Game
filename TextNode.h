@@ -19,7 +19,7 @@ public:
 	{
 		Fonts.load(Resource::Font, font);
 		this->setString(string);
-		this->setCharacterSize(size);
+		this->setCharacterSize(Main::screenWidth / size);
 		this->setFont(*Fonts.get(font));
 		this->setFillColor(sf::Color(color));
 		this->setPosition(sf::Vector2f(Main::screenWidth / positionX, Main::screenHeight / positionY));

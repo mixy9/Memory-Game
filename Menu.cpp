@@ -15,13 +15,13 @@ void Menu::initialize()
 	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Main::screenWidth, Main::screenHeight, NULL, NULL);
 	backgroundSprite->setScale(Main::screenWidth / backgroundSprite->getLocalBounds().width, Main::screenHeight / backgroundSprite->getLocalBounds().height); 
 
-	okay = std::make_shared<TextNode>("OK", 110u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
-	quit = std::make_shared<TextNode>("Quit", 75u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
-	play = std::make_shared<TextNode>("Play", 75u, 2.3f, 1.77f, sf::Color::White, Filename::font2);
-	game = std::make_shared<TextNode>("GAME", 160u, 2.7f, 3.1f, sf::Color(96, 69, 35), Filename::font2);
-	repeat = std::make_shared<TextNode>("Try again", 75u, 2.6f, 1.6f, sf::Color::White, Filename::font2);
-	title = std::make_shared<TextNode>("Memory", 220u, 4.7f, 8.6f, sf::Color(219, 139, 41), Filename::font1);
-	theEnd = std::make_shared<TextNode>("CONGRATULATIONS", 70u, 3.9f, 3.2f, sf::Color::White, Filename::font2);
+	okay = std::make_shared<TextNode>("OK", 12u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
+	quit = std::make_shared<TextNode>("Quit", 18u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
+	play = std::make_shared<TextNode>("Play", 18u, 2.3f, 1.77f, sf::Color::White, Filename::font2);
+	game = std::make_shared<TextNode>("GAME", 9u, 2.7f, 3.f, sf::Color(96, 69, 35), Filename::font2);
+	repeat = std::make_shared<TextNode>("Try again", 18u, 2.6f, 1.6f, sf::Color::White, Filename::font2);
+	title = std::make_shared<TextNode>("Memory", 6u, 4.7f, 8.6f, sf::Color(219, 139, 41), Filename::font1);
+	theEnd = std::make_shared<TextNode>("CONGRATULATIONS", 20u, 3.9f, 3.2f, sf::Color::White, Filename::font2);
 
 	title->setOutlineThickness(7.5f);
 	title->setOutlineColor(sf::Color::White);
@@ -63,9 +63,9 @@ bool Menu::mouseHover(sPtr<TextNode> text)
 
 void Menu::header()
 {
-	title->setCharacterSize(110u);
+	title->setCharacterSize(Main::screenWidth / 12u);
 	title->setPosition(Main::screenWidth / 2.7f, Main::screenHeight / 28.f);
-	game->setCharacterSize(90u);
+	game->setCharacterSize(Main::screenWidth / 15u);
 	game->setPosition(Main::screenWidth / 2.3f, Main::screenHeight / 7.4f);
 	Main::window.draw(*title);
 	Main::window.draw(*game);
