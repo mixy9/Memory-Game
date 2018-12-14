@@ -80,7 +80,7 @@ bool Deck::pickCards(Card* card, Player& player, sf::Time &elapsedTime)
 	else return false;
 }
 
-bool Deck::matched(Player& player, sf::Time &elapsedTime)
+bool Deck::matched(Player& player)
 {
 	if (cardPick[0] != nullptr && cardPick[1] != nullptr)
 	{
@@ -95,13 +95,13 @@ bool Deck::matched(Player& player, sf::Time &elapsedTime)
 	return true;
 }
 
-bool Deck::unmatched(Player& player, sf::Time &elapsedTime)
+bool Deck::unmatched()
 {
 	if (cardPick[0] != nullptr && cardPick[1] != nullptr)
 	{
 		if (cardPick[0]->getNumber() != cardPick[1]->getNumber()) {
 			cardPick[0]->hide();
-			cardPick[1]->hide(); 
+			cardPick[1]->hide();  
 		}  
 	}
 	return true;

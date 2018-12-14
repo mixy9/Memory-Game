@@ -13,11 +13,7 @@ void Menu::initialize()
 	soundSprite = std::make_shared<SpriteNode>(Filename::sound, 1.09f, 19.f, Main::screenWidth, Main::screenHeight);
 	noSoundSprite = std::make_shared<SpriteNode>(Filename::noSound, 1.09f, 19.f, Main::screenWidth, Main::screenHeight);
 	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Main::screenWidth, Main::screenHeight, NULL, NULL);
-	backgroundSprite->setScale(Main::screenWidth / backgroundSprite->getLocalBounds().width,
-	                           Main::screenHeight / backgroundSprite->getLocalBounds().height); 
-	introBG = std::make_shared<SpriteNode>(Filename::introBG, Main::screenWidth, Main::screenHeight, NULL, NULL);
-	introBG->setScale(Main::screenWidth / introBG->getLocalBounds().width,
-		              Main::screenHeight / introBG->getLocalBounds().height);
+	backgroundSprite->setScale(Main::screenWidth / backgroundSprite->getLocalBounds().width, Main::screenHeight / backgroundSprite->getLocalBounds().height); 
 
 	okay = std::make_shared<TextNode>("OK", 110u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
 	quit = std::make_shared<TextNode>("Quit", 75u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
@@ -53,7 +49,7 @@ bool Menu::textClick()
 
 bool Menu::mouseHover(sPtr<TextNode> text)
 {
-	if (text->getGlobalBounds().contains((float)mouseWorldPosition.x, (float)mouseWorldPosition.y))
+	if (text->getGlobalBounds().contains(mouseWorldPosition.x, mouseWorldPosition.y))
 	{
 		text->setFillColor(sf::Color(255, 186, 83));
 		mIsMouseOver = true;

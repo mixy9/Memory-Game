@@ -48,6 +48,7 @@ void Card::animateCardFlip(sf::Time &elapsedTime)
 	}
 	mShowCard = currentTime >= halfSpinTime;
 	if (mShowCard) {
+		sf::sleep(sf::milliseconds(20));
 		float scale = (currentTime - halfSpinTime) / halfSpinTime;
 		mSprite->setScale(std::sin(scale * PI() / 2) * Main::cardWidht, Main::cardHeight);
 		this->hide();

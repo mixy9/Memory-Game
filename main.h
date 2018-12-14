@@ -27,9 +27,9 @@ namespace Filename
 
 	// Textures:
 	const std::string menu("Graphics/menu.png");
+	const std::string paper("Graphics/paper.png");
 	const std::string sound("Graphics/sound.png");
-	const std::string noSound("Graphics/nsnd.png");
-	const std::string introBG("Graphics/introBG.jpg");
+	const std::string noSound("Graphics/noSound.png");
 	const std::string backCard("Graphics/backCard.png");
 	const std::string background("Graphics/background.jpg");
 
