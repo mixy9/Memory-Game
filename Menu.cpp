@@ -10,8 +10,8 @@ Menu::Menu() :
 void Menu::initialize()
 {
 	menuSprite = std::make_shared<SpriteNode>(Filename::menu, 2.9f, 1.9f, 3902.85f, 2194.28f);
-	soundSprite = std::make_shared<SpriteNode>(Filename::sound, 1.09f, 19.f, Main::screenWidth, Main::screenHeight);
-	noSoundSprite = std::make_shared<SpriteNode>(Filename::noSound, 1.09f, 19.f, Main::screenWidth, Main::screenHeight);
+	soundSprite = std::make_shared<SpriteNode>(Filename::sound, 1.09f, 19.f, 1366.f, 768.f);
+	noSoundSprite = std::make_shared<SpriteNode>(Filename::noSound, 1.09f, 19.f, 1366.f, 768.f);
 	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Main::screenWidth, Main::screenHeight, NULL, NULL);
 	backgroundSprite->setScale(Main::screenWidth / backgroundSprite->getLocalBounds().width, Main::screenHeight / backgroundSprite->getLocalBounds().height); 
 
@@ -82,7 +82,7 @@ void Menu::drawEnd()
 void Menu::drawInput()
 {
 	header();
-	mIsMusicOn;
+	mIsMusicOn = true;
 	Main::window.draw(*okay);
 }
 

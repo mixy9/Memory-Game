@@ -14,12 +14,12 @@ void Player::initialize()
 	mTextUnderline.setSize(sf::Vector2f(400.f, 2.5f));
 	mTextUnderline.setFillColor(sf::Color::White);
 
-	paper = std::make_unique<SpriteNode>(Filename::paper, 38.f, 16.f, Main::screenWidth / 1.f, Main::screenHeight / 0.9f);
+	paper = std::make_unique<SpriteNode>(Filename::paper, 38.f, 16.f, 1366.f, 853.f);
 
 	name = std::make_shared<TextNode>("Player: ", 17u, 4.1f, 2.f, sf::Color::White, Filename::font2);
 	playerName = std::make_shared<TextNode>("", 17u, NULL, NULL, sf::Color(121, 77, 36), Filename::font2);
 	result = std::make_shared<TextNode>("", 27u, 3.7f, 2.3f, sf::Color::White, Filename::font2);
-	hud = std::make_shared<TextNode>("", 41u, 18.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
+	hud = std::make_shared<TextNode>("", 40u, 18.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
 	star = std::make_shared<TextNode>("", 11u, 2.5f, 2.f, sf::Color(255, 173, 51), Filename::font2);
 
 	star->setOutlineThickness(2.f);

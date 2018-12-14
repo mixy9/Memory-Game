@@ -14,8 +14,8 @@ void Deck::addCard(sPtr<sf::Sprite>& sprite, size_t number)
 }
 
 void Deck::initialize()
-{
-	const float spacing = Main::cardWidht * 207.f;
+{ 
+	const float spacing = Main::screenWidth / 10.11f;
 	float posX = Main::screenWidth / 3.5f;
 	float posY = Main::screenHeight / 24.0f;
 	const sf::Vector2f topLeftPosition(posX, posY);
