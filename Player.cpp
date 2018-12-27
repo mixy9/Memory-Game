@@ -10,16 +10,16 @@ Player::Player() :
 
 void Player::initialize()
 {	
-	mTextUnderline.setPosition(sf::Vector2f(Main::screenWidth / 2.5f, Main::screenHeight / 1.6f));
-	mTextUnderline.setSize(sf::Vector2f(400.f, 2.5f));
-	mTextUnderline.setFillColor(sf::Color::White);
+	m_textUnderline.setPosition(sf::Vector2f(Main::screenWidth / 2.5f, Main::screenHeight / 1.6f));
+	m_textUnderline.setSize(sf::Vector2f(Main::screenWidth / 3.4f, Main::screenHeight / 307.f));
+	m_textUnderline.setFillColor(sf::Color::White);
 
-	paper = std::make_unique<SpriteNode>(Filename::paper, 38.f, 16.f, 1366.f, 853.f);
+	m_paper = std::make_unique<SpriteNode>(Filename::paper, 50.f, 16.f, 1290.f, 853.f);
 
-	name = std::make_shared<TextNode>("Player: ", 17u, 4.1f, 2.f, sf::Color::White, Filename::font2);
+	name = std::make_shared<TextNode>(PLAYER_TEXT, 17u, 4.1f, 2.f, sf::Color::White, Filename::font2);
 	playerName = std::make_shared<TextNode>("", 17u, NULL, NULL, sf::Color(121, 77, 36), Filename::font2);
 	result = std::make_shared<TextNode>("", 27u, 3.7f, 2.3f, sf::Color::White, Filename::font2);
-	hud = std::make_shared<TextNode>("", 40u, 18.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
+	hud = std::make_shared<TextNode>("", 40u, 19.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
 	star = std::make_shared<TextNode>("", 11u, 2.5f, 2.f, sf::Color(255, 173, 51), Filename::font2);
 
 	star->setOutlineThickness(2.f);
@@ -30,20 +30,20 @@ void Player::playerInput(sf::Event& Event)
 {
 	// Handle ASCII characters only
 	char uCode = Event.text.unicode;
-	if (uCode >= 48 && uCode <= 122 && mInputtedText.getSize() < 9) // Maximum 9 characters
+	if (uCode >= 48 && uCode <= 122 && m_inputtedText.getSize() < 9) // Maximum 9 characters
 	{
-		mInputtedText += uCode;
+		m_inputtedText += uCode;
 	}
 	// Delete characters using the backspace key
-	else if (uCode == 8 && mInputtedText.getSize() > 0) {
-		mInputtedText.erase(mInputtedText.getSize() - 1, mInputtedText.getSize());
+	else if (uCode == 8 && m_inputtedText.getSize() > 0) {
+		m_inputtedText.erase(m_inputtedText.getSize() - 1, m_inputtedText.getSize());
 	}
 }
 
 void Player::clearPlayerInput()
 {
 	// Clear the inputted text and enter a new name
-	mInputtedText.clear();
+	m_inputtedText.clear();
 }
 
 void Player::rating()
@@ -65,7 +65,7 @@ void Player::drawHud()
 {
 	playerName->setCharacterSize(Main::screenWidth / 27u);
 	playerName->setPosition(sf::Vector2f(Main::screenWidth / 18.f, Main::screenHeight / 7.5f));
-	Main::window.draw(*paper);
+	Main::window.draw(*m_paper);
 	Main::window.draw(*playerName);
 	Main::window.draw(*hud);
 }
@@ -94,8 +94,8 @@ int Player::allMatching()
 void Player::draw()
 {
 	playerName->setPosition(sf::Vector2f(Main::screenWidth / 2.4f, Main::screenHeight / 2.f));
-	playerName->setString(mInputtedText);
-	Main::window.draw(mTextUnderline);
+	playerName->setString(m_inputtedText);
+	Main::window.draw(m_textUnderline);
 	Main::window.draw(*playerName);
 	Main::window.draw(*name);
 }

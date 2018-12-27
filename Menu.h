@@ -10,16 +10,15 @@
 class Menu : public SceneNode
 {
 private:
-	ResourceHolder<sf::Texture> Textures;	
-	std::vector<sPtr<TextNode>> menuButtons;
+	std::vector<sPtr<TextNode>> m_menuButtons;
 	sPtr<TextNode> okay, quit, play, game, title, repeat, theEnd;
 	sPtr<SpriteNode> menuSprite, backgroundSprite, introBG, soundSprite, noSoundSprite;
 
-	sf::Vector2f mouseWorldPosition;
-	sf::Vector2i mouseScreenPosition;
+	sf::Vector2f m_mouseWorldPosition;
+	sf::Vector2i m_mouseScreenPosition;
 
-	bool mIsMusicOn;
-	bool mIsMouseOver;
+	bool m_isMusicOn;
+	bool m_isMouseOver;
 
 public:	
 	Menu();	

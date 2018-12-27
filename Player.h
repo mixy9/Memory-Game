@@ -12,9 +12,9 @@
 class Player :  public SceneNode
 {
 protected:
-	sf::String mInputtedText;
-	sf::RectangleShape mTextUnderline;
-	sPtr<SpriteNode> paper;
+	sPtr<SpriteNode> m_paper;
+	sf::String m_inputtedText;
+	sf::RectangleShape m_textUnderline;
 	unsigned int minutes, movesCounter, matchingCards;
 	sPtr<TextNode> name, playerName, hud, result, star;
 	

@@ -2,8 +2,8 @@
 
 
 Menu::Menu() :
-	mIsMusicOn(true),
-	mIsMouseOver(false)	
+	m_isMusicOn(true),
+	m_isMouseOver(false)
 {
 }
 
@@ -15,21 +15,21 @@ void Menu::initialize()
 	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Main::screenWidth, Main::screenHeight, NULL, NULL);
 	backgroundSprite->setScale(Main::screenWidth / backgroundSprite->getLocalBounds().width, Main::screenHeight / backgroundSprite->getLocalBounds().height); 
 
-	okay = std::make_shared<TextNode>("OK", 12u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
-	quit = std::make_shared<TextNode>("Quit", 18u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
-	play = std::make_shared<TextNode>("Play", 18u, 2.3f, 1.77f, sf::Color::White, Filename::font2);
-	game = std::make_shared<TextNode>("GAME", 9u, 2.7f, 3.f, sf::Color(96, 69, 35), Filename::font2);
-	repeat = std::make_shared<TextNode>("Try again", 18u, 2.6f, 1.6f, sf::Color::White, Filename::font2);
-	title = std::make_shared<TextNode>("Memory", 6u, 4.7f, 8.6f, sf::Color(219, 139, 41), Filename::font1);
-	theEnd = std::make_shared<TextNode>("CONGRATULATIONS", 20u, 3.9f, 3.2f, sf::Color::White, Filename::font2);
+	okay = std::make_shared<TextNode>(OK_BUTTON, 12u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
+	quit = std::make_shared<TextNode>(QUIT_BUTTON, 18u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
+	play = std::make_shared<TextNode>(PLAY_BUTTON, 18u, 2.3f, 1.77f, sf::Color::White, Filename::font2);
+	game = std::make_shared<TextNode>(GAME_TEXT, 9u, 2.7f, 3.f, sf::Color(96, 69, 35), Filename::font2);
+	repeat = std::make_shared<TextNode>(REPEAT_BUTTON, 18u, 2.6f, 1.6f, sf::Color::White, Filename::font2);
+	title = std::make_shared<TextNode>(TITLE_TEXT, 6u, 4.7f, 9.4f, sf::Color(219, 139, 41), Filename::font1);
+	theEnd = std::make_shared<TextNode>(END_TEXT, 20u, 3.9f, 3.2f, sf::Color::White, Filename::font2);
 
 	title->setOutlineThickness(7.5f);
 	title->setOutlineColor(sf::Color::White);
 
-	menuButtons.push_back(quit);
-	menuButtons.push_back(play);
-	menuButtons.push_back(okay);
-	menuButtons.push_back(repeat);
+	m_menuButtons.push_back(quit);
+	m_menuButtons.push_back(play);
+	m_menuButtons.push_back(okay);
+	m_menuButtons.push_back(repeat);
 }
 
 bool Menu::quitRect()
@@ -41,24 +41,23 @@ bool Menu::quitRect()
 bool Menu::textClick()
 {
 	// Check if text is clicked
-	std::vector<sPtr<TextNode>>::iterator it = std::find_if(menuButtons.begin(), menuButtons.end(), [=](sPtr<TextNode>& text) -> bool
-	{ return (text->getGlobalBounds().contains((float)mouseWorldPosition.x, (float)mouseWorldPosition.y) && mouseHover(text)); });
-	
-	return it != menuButtons.end() ? (*it).get() : nullptr;
+	std::vector<sPtr<TextNode>>::iterator it = std::find_if(m_menuButtons.begin(), m_menuButtons.end(), [=](sPtr<TextNode>& text) -> bool
+	{ return (text->getGlobalBounds().contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y) && mouseHover(text)); });	
+	return it != m_menuButtons.end() ? (*it).get() : nullptr;
 }
 
 bool Menu::mouseHover(sPtr<TextNode> text)
 {
-	if (text->getGlobalBounds().contains(mouseWorldPosition.x, mouseWorldPosition.y))
+	if (text->getGlobalBounds().contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y))
 	{
 		text->setFillColor(sf::Color(255, 186, 83));
-		mIsMouseOver = true;
+		m_isMouseOver = true;
 	}
 	else {
 		text->setFillColor(sf::Color::White);
-		mIsMouseOver = false;
+		m_isMouseOver = false;
 	}
-	return mIsMouseOver;
+	return m_isMouseOver;
 }
 
 void Menu::header()
@@ -82,7 +81,7 @@ void Menu::drawEnd()
 void Menu::drawInput()
 {
 	header();
-	mIsMusicOn = true;
+	m_isMusicOn = true;
 	Main::window.draw(*okay);
 }
 
@@ -100,28 +99,28 @@ void Menu::musicSwitch()
 	sf::FloatRect on = soundSprite->getGlobalBounds();
 	sf::FloatRect off = noSoundSprite->getGlobalBounds();
 
-	if (mIsMusicOn && (on.contains(mouseWorldPosition.x, mouseWorldPosition.y)))
+	if (m_isMusicOn && (on.contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y)))
 	{
 		SoundManager::getInstance()->pauseMusic();
-		mIsMusicOn = false;
+		m_isMusicOn = false;
 	}
-	else if (!mIsMusicOn && (off.contains(mouseWorldPosition.x, mouseWorldPosition.y))) {
+	else if (!m_isMusicOn && (off.contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y))) {
 		SoundManager::getInstance()->playMusic(Filename::musicFilename);
-		mIsMusicOn = true;
+		m_isMusicOn = true;
 	}
 }
 
 void Menu::draw()
 {
 	Main::window.draw(*backgroundSprite);
-	mIsMusicOn ? Main::window.draw(*soundSprite) : Main::window.draw(*noSoundSprite);
-	mouseWorldPosition = Main::window.mapPixelToCoords(mouseScreenPosition);
+	m_isMusicOn ? Main::window.draw(*soundSprite) : Main::window.draw(*noSoundSprite);
+	m_mouseWorldPosition = Main::window.mapPixelToCoords(m_mouseScreenPosition);
 }
 
 void Menu::update()
 {
-	mouseScreenPosition = sf::Mouse::getPosition();
-	for (auto& text : menuButtons)
+	m_mouseScreenPosition = sf::Mouse::getPosition();
+	for (auto& text : m_menuButtons)
 	{
 		mouseHover(text);
 	}

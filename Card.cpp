@@ -1,4 +1,5 @@
-#include "Card.h"
+#include "Card.h" 
+
 
 
 Card::Card()
@@ -6,83 +7,88 @@ Card::Card()
 }
 
 Card::Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber) :
-	mSprite(cardSprite), mNumber(cardNumber)
-{
-	mSprite = std::make_shared<sf::Sprite>();
-	mSprite->setScale(sf::Vector2f(Main::cardWidht, Main::cardHeight));
-	frontCardTexture = "Graphics/Cards/" + std::to_string(cardNumber) + ".png";
+	m_sprite(cardSprite), m_number(cardNumber)
+{ 
+	m_frontCardTexture = "Graphics/Cards/" + std::to_string(cardNumber) + ".png";
+
+	//m_backSprite = std::make_shared<SpriteNode>(Filename::backCard, NULL, NULL, Main::cardWidht, Main::cardHeight);
+	//m_frontSprite = std::make_shared<SpriteNode>(m_frontCardTexture, NULL, NULL, Main::cardWidht, Main::cardHeight);
+
+	m_sprite = std::make_shared<sf::Sprite>();
+	m_texture.load(Resource::Texture, Filename::backCard);
+	m_sprite->setScale(sf::Vector2f(Main::cardWidht, Main::cardHeight));
+	
+	m_sprite = std::make_shared<sf::Sprite>();
+	m_texture.load(Resource::Texture, m_frontCardTexture);
+	m_sprite->setScale(sf::Vector2f(Main::cardWidht, Main::cardHeight));
 }
 
-sf::Sprite& Card::getSprite()
+sf::Sprite&  Card::setSprite()
 {
-	if (mShowCard == true)
+	if (m_showCard == true)
+	{ 
+		m_sprite->setTexture(*m_texture.get(m_frontCardTexture));
+	}
+	else 
 	{
-		Texture.load(Resource::Texture, frontCardTexture); 
-		mSprite->setTexture(*Texture.get(frontCardTexture));
+		m_sprite->setTexture(*m_texture.get(Filename::backCard));
 	}
-	else {
-		Texture.load(Resource::Texture, Filename::backCard);
-		mSprite->setTexture(*Texture.get(Filename::backCard));
-	}
-	return *mSprite;
+	return *m_sprite;
 }
 
 void Card::setPosition(float posX, float posY)
 {
-	mSprite->setPosition(posX, posY);
+	m_sprite->setPosition(posX, posY);
 }
 
-void Card::animateCardFlip(sf::Time &elapsedTime)
+void Card::animateCardFlip(sf::Time &elapsedTime, bool show)
 {
 	sf::Time currentTime = sf::Time::Zero;
 	const sf::Time spinTime = sf::milliseconds(400);
 	const sf::Time halfSpinTime = spinTime / 3.f;
-	sf::Time delta = clock.restart();
-	if (mShowCard == false)
+	sf::Time delta = m_clock.restart();
+	
+	if (m_showCard == show)
 	{
 		if (currentTime < spinTime - delta)
 			currentTime += delta;
-		else {
+		else 
+		{
 			currentTime = spinTime;
 		}
-	}
-	mShowCard = currentTime >= halfSpinTime;
-	if (mShowCard) {
-		sf::sleep(sf::milliseconds(20));
+	} 
+	m_showCard = currentTime >= halfSpinTime;
+	if (m_showCard) {
 		float scale = (currentTime - halfSpinTime) / halfSpinTime;
-		mSprite->setScale(std::sin(scale * PI() / 2) * Main::cardWidht, Main::cardHeight);
-		this->hide();
+		m_sprite->setScale(std::sin(scale * PI() / 2.f) * Main::cardWidht, Main::cardHeight);
+		this->isShown(false);
 	}
-	else {  
+	else 
+	{  
 		float scale = 1.f - currentTime / halfSpinTime;
-		mSprite->setScale(std::sin(scale * PI() / 2) * Main::cardWidht, Main::cardHeight);
-		this->show();
+		m_sprite->setScale(std::sin(scale * PI() / 2.f) * Main::cardWidht, Main::cardHeight);
+		this->isShown(true);
 	}
 }
 
-bool Card::show()
+bool Card::isShown(bool show)
 {
-	return mShowCard = true;
-}
-
-bool Card::hide()
-{
-	return mShowCard = false;
+	return m_showCard = show;
 }
 
 int Card::getNumber()
 {
-	return mNumber;
+	return m_number;
 }
 
 void Card::draw()
-{
-	Main::window.draw(*mSprite);
+{ 
+	Main::window.draw(*m_sprite);
 }
 
 void Card::update(sf::Time &elapsedTime)
 {
-	this->animateCardFlip(elapsedTime);
+	this->animateCardFlip(elapsedTime, false);
 }
 
 Card::~Card()

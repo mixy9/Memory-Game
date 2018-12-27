@@ -8,24 +8,23 @@
 class Card : public SceneNode
 {
 protected:
-	ResourceHolder<sf::Texture> Texture;
-	std::string frontCardTexture;
-	sPtr<sf::Sprite> mSprite;
-	bool mShowCard{ false };
-	sf::Clock clock;
-	size_t mNumber;
+	ResourceHolder<sf::Texture> m_texture;
+	std::string m_frontCardTexture;
+	sPtr<sf::Sprite> m_sprite;
+	bool m_showCard{ false };
+	sf::Clock m_clock;
+	size_t m_number;
 
 public:
 	Card();	
 	Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber);
+
+	sf::Sprite& setSprite(); 
 	
-	sf::Sprite& getSprite();
-
 	void setPosition(float posX, float posY);
-	void animateCardFlip(sf::Time &elapsedTime);
+	void animateCardFlip(sf::Time &elapsedTime, bool show);
 
-	bool show();
-	bool hide();
+	bool isShown(bool show);
 
 	int getNumber();
 

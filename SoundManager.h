@@ -8,12 +8,12 @@
 class SoundManager
 {
 private:
-	ResourceHolder<sf::SoundBuffer> soundBuffer;
+	ResourceHolder<sf::SoundBuffer> m_soundBuffer;
 
 	static SoundManager* instance;
 
-	sf::Sound sound;
-	sf::Music music;
+	sf::Sound m_sound;
+	sf::Music m_music;
 
 	enum class MusicState
 	{
