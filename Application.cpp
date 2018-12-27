@@ -6,6 +6,19 @@ Application::Application()
 {
 }
 
+int Application::execute()
+{
+	while (Main::window.isOpen())
+	{
+		Main::window.clear();
+		display();
+		Main::window.display();
+		processEvents();
+		update();
+	}
+	return EXIT_SUCCESS;
+}
+
 bool Application::initialize()
 {
 	Main::window.setKeyRepeatEnabled(false);
@@ -22,22 +35,9 @@ bool Application::initialize()
 	deck.initialize();
 
 	player.initialize();
-	//SoundManager::getInstance()->playMusic(Filename::musicFilename);
+	SoundManager::getInstance()->playMusic(Filename::musicFilename);
 
 	return true;
-}
-
-int Application::execute()
-{
-	while (Main::window.isOpen())
-	{
-		Main::window.clear();
-		display();		
-		Main::window.display();
-		processEvents();
-		update();
-	}
-	return EXIT_SUCCESS;
 }
 
 void Application::update()
@@ -157,8 +157,8 @@ void Application::processEvents()
 					if (deck.pickCards(pCard, player, delta))
 					{
 						deck.matched(player);
-						if (player.allMatching()) {
-							sf::sleep(sf::milliseconds(50));
+						if (player.allMatching()) 
+						{
 							gameState = GameState::END;
 						}
 					}

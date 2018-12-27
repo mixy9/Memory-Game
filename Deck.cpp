@@ -67,15 +67,13 @@ bool Deck::pickCards(Card* card, Player& player, sf::Time &elapsedTime)
 	if (m_cardPick[0] == nullptr)
 	{
 		m_cardPick[0] = card; 
-		card->animateCardFlip(elapsedTime, false); 
-		return true;
+		m_cardPick[0]->animateCardFlip(elapsedTime, false);
 	}
 	else if (m_cardPick[0] != nullptr && m_cardPick[1] == nullptr)
 	{
 		m_cardPick[1] = card; 
-		card->animateCardFlip(elapsedTime, false); 
+		m_cardPick[1]->animateCardFlip(elapsedTime, false);
 		player.movesCounter++; 
-		return true;
 	} 
 	else return false;
 }
@@ -102,9 +100,7 @@ bool Deck::unmatched(sf::Time& elapsedTime)
 	{
 		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber()) {
 			m_cardPick[0]->isShown(false);
-			m_cardPick[1]->isShown(false);
-			//m_cardPick[0]->animateCardFlip(elapsedTime, true);
-			//m_cardPick[1]->animateCardFlip(elapsedTime, true);
+			m_cardPick[1]->isShown(false); 
 		}  
 		return true;
 	}

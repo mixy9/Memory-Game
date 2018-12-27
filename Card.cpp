@@ -13,12 +13,8 @@ Card::Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber) :
 
 	//m_backSprite = std::make_shared<SpriteNode>(Filename::backCard, NULL, NULL, Main::cardWidht, Main::cardHeight);
 	//m_frontSprite = std::make_shared<SpriteNode>(m_frontCardTexture, NULL, NULL, Main::cardWidht, Main::cardHeight);
-
 	m_sprite = std::make_shared<sf::Sprite>();
-	m_texture.load(Resource::Texture, Filename::backCard);
-	m_sprite->setScale(sf::Vector2f(Main::cardWidht, Main::cardHeight));
-	
-	m_sprite = std::make_shared<sf::Sprite>();
+	m_texture.load(Resource::Texture, Filename::backCard);	
 	m_texture.load(Resource::Texture, m_frontCardTexture);
 	m_sprite->setScale(sf::Vector2f(Main::cardWidht, Main::cardHeight));
 }

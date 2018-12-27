@@ -37,9 +37,9 @@ private:
 public:
 	Application();
 
-	bool initialize();
-
 	int execute();
+
+	bool initialize();
 
 	void update();
 	void display();
