@@ -1,7 +1,6 @@
 #include "Card.h" 
 
 
-
 Card::Card()
 {
 }
@@ -9,24 +8,21 @@ Card::Card()
 Card::Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber) :
 	m_sprite(cardSprite), m_number(cardNumber)
 { 
-	m_frontCardTexture = "Graphics/Cards/" + std::to_string(cardNumber) + ".png";
-
-	//m_backSprite = std::make_shared<SpriteNode>(Filename::backCard, NULL, NULL, Main::cardWidht, Main::cardHeight);
-	//m_frontSprite = std::make_shared<SpriteNode>(m_frontCardTexture, NULL, NULL, Main::cardWidht, Main::cardHeight);
 	m_sprite = std::make_shared<sf::Sprite>();
-	m_texture.load(Resource::Texture, Filename::backCard);	
-	m_texture.load(Resource::Texture, m_frontCardTexture);
 	m_sprite->setScale(sf::Vector2f(Main::cardWidht, Main::cardHeight));
+	m_frontCardTexture = "Graphics/Cards/" + std::to_string(cardNumber) + ".png";
 }
 
 sf::Sprite&  Card::setSprite()
 {
 	if (m_showCard == true)
-	{ 
+	{
+		m_texture.load(Resource::Texture, m_frontCardTexture);
 		m_sprite->setTexture(*m_texture.get(m_frontCardTexture));
 	}
 	else 
 	{
+		m_texture.load(Resource::Texture, Filename::backCard);
 		m_sprite->setTexture(*m_texture.get(Filename::backCard));
 	}
 	return *m_sprite;
@@ -37,10 +33,20 @@ void Card::setPosition(float posX, float posY)
 	m_sprite->setPosition(posX, posY);
 }
 
+void Card::setID()
+{
+	ID = m_number;
+}
+
+int Card::getID()
+{
+	return ID;
+}
+
 void Card::animateCardFlip(sf::Time &elapsedTime, bool show)
 {
 	sf::Time currentTime = sf::Time::Zero;
-	const sf::Time spinTime = sf::milliseconds(400);
+	const sf::Time spinTime = sf::milliseconds(500);
 	const sf::Time halfSpinTime = spinTime / 3.f;
 	sf::Time delta = m_clock.restart();
 	
@@ -57,13 +63,13 @@ void Card::animateCardFlip(sf::Time &elapsedTime, bool show)
 	if (m_showCard) {
 		float scale = (currentTime - halfSpinTime) / halfSpinTime;
 		m_sprite->setScale(std::sin(scale * PI() / 2.f) * Main::cardWidht, Main::cardHeight);
-		this->isShown(false);
+		this->isShown(show);
 	}
 	else 
 	{  
 		float scale = 1.f - currentTime / halfSpinTime;
 		m_sprite->setScale(std::sin(scale * PI() / 2.f) * Main::cardWidht, Main::cardHeight);
-		this->isShown(true);
+		this->isShown(!show);
 	}
 }
 

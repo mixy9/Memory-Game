@@ -86,7 +86,7 @@ void Player::resetScore()
 	matchingCards = 0;
 }
 
-int Player::allMatching()
+bool Player::allMatching()
 {
 	return matchingCards == 12;
 }

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "stdafx.h"
 #include "ResourceHolder.h"
 
@@ -6,7 +7,6 @@
 class TextNode : public sf::Text
 {
 private:
-
 	ResourceHolder<sf::Font> Fonts;
 
 public:
@@ -24,5 +24,4 @@ public:
 		this->setFillColor(sf::Color(color));
 		this->setPosition(sf::Vector2f(Main::screenWidth / positionX, Main::screenHeight / positionY));
 	}
-
 };

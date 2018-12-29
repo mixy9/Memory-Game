@@ -1,4 +1,5 @@
 #pragma once
+
 #include "stdafx.h"
 #include "ResourceHolder.h"
 
@@ -7,7 +8,6 @@
 class SpriteNode : public sf::Sprite
 {
 private:
-
 	ResourceHolder<sf::Texture> Textures;
 
 public:
@@ -23,6 +23,5 @@ public:
 		this->setPosition(sf::Vector2f(Main::screenWidth / positionX, Main::screenHeight / positionY));
 		this->setScale(sf::Vector2f(Main::screenWidth / scaleX, Main::screenHeight / scaleY));
 	}
-
 };
 

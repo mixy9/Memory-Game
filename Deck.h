@@ -25,13 +25,13 @@ public:
 
 	bool pickCards(Card* card, Player& player, sf::Time &elapsedTime);
 	bool matched(Player& player);
-	bool unmatched(sf::Time& elapsedTime);
+	bool unmatched(sf::Time &elapsedTime);
 
 	void drawDeck();
 	void clearChoices();
 
 	virtual void initialize();
-	virtual void update(sf::Vector2f& mousePosition, sf::Time& elapsedTime, Player& player);
+	virtual void update(sf::Vector2f& mousePosition, Card* card, sf::Time& elapsedTime, Player& player);
 
 	~Deck();
 };

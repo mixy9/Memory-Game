@@ -35,7 +35,7 @@ bool Application::initialize()
 	deck.initialize();
 
 	player.initialize();
-	SoundManager::getInstance()->playMusic(Filename::musicFilename);
+	//SoundManager::getInstance()->playMusic(Filename::musicFilename);
 
 	return true;
 }
@@ -101,7 +101,7 @@ void Application::endGame()
 void Application::updatePlaying()
 {
 	delta = clock.getElapsedTime();
-	deck.update(mouseWorldPosition, delta, player);
+	deck.update(mouseWorldPosition, pCard, delta, player);
 	player.update(delta, seconds);
 	if (pCard != nullptr)
 	{
@@ -156,11 +156,11 @@ void Application::processEvents()
 				{
 					if (deck.pickCards(pCard, player, delta))
 					{
-						deck.matched(player);
 						if (player.allMatching()) 
 						{
 							gameState = GameState::END;
 						}
+						deck.matched(player);
 					}
 					else if (deck.unmatched(delta)) 
 					{

@@ -14,6 +14,7 @@ protected:
 	bool m_showCard{ false };
 	sf::Clock m_clock;
 	size_t m_number;
+	int ID;
 
 public:
 	Card();	
@@ -27,7 +28,8 @@ public:
 	bool isShown(bool show);
 
 	int getNumber();
-
+	void setID();
+	int getID();
 	virtual void draw();
 	virtual void initialize() {};
 	virtual void update(sf::Time &elapsedTime);

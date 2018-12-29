@@ -32,7 +32,7 @@ public:
 	void drawResult();
 	void resetScore();
 
-	int allMatching();
+	bool allMatching();
 
 	virtual void draw();
 	virtual void update(sf::Time& elapsedTime, unsigned int seconds);
