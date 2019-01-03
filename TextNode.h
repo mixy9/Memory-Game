@@ -7,7 +7,7 @@
 class TextNode : public sf::Text
 {
 private:
-	ResourceHolder<sf::Font> Fonts;
+	ResourceHolder<sf::Font> m_fonts;
 
 public:
 
@@ -17,10 +17,10 @@ public:
 	
 	TextNode(std::string string, size_t size, float positionX, float positionY, sf::Color(color), std::string font)
 	{
-		Fonts.load(Resource::Font, font);
+		m_fonts.load(Resource::Font, font);
 		this->setString(string);
 		this->setCharacterSize(Main::screenWidth / size);
-		this->setFont(*Fonts.get(font));
+		this->setFont(*m_fonts.get(font));
 		this->setFillColor(sf::Color(color));
 		this->setPosition(sf::Vector2f(Main::screenWidth / positionX, Main::screenHeight / positionY));
 	}

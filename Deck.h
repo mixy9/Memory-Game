@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Card.h"
 #include "Player.h"
 #include "SoundManager.h"
@@ -16,7 +15,6 @@ public:
 
 	Deck();
 
-	void addCard(sPtr<sf::Sprite>& sprite, size_t number);
 	void display();
 	void resetCards();
 	void shuffleCards();
@@ -31,7 +29,7 @@ public:
 	void clearChoices();
 
 	virtual void initialize();
-	virtual void update(sf::Vector2f& mousePosition, Card* card, sf::Time& elapsedTime, Player& player);
+	virtual void update(sf::Vector2f& mousePosition, sf::Time& elapsedTime);
 
 	~Deck();
 };

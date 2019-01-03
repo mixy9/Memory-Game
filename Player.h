@@ -24,7 +24,7 @@ public:
 	friend class Deck;
 
 	virtual void initialize();
-
+	
 	void playerInput(sf::Event& Event);
 	void clearPlayerInput();
 	void rating();

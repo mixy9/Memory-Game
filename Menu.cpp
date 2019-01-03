@@ -81,7 +81,7 @@ void Menu::drawEnd()
 void Menu::drawInput()
 {
 	header();
-	m_isMusicOn = true;
+	m_isMusicOn == true;
 	Main::window.draw(*okay);
 }
 

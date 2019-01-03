@@ -8,7 +8,7 @@
 class SpriteNode : public sf::Sprite
 {
 private:
-	ResourceHolder<sf::Texture> Textures;
+	ResourceHolder<sf::Texture> m_textures;
 
 public:
 
@@ -18,8 +18,8 @@ public:
 
 	SpriteNode(std::string texture, float positionX, float positionY, float scaleX, float scaleY)
 	{
-		Textures.load(Resource::Texture, texture);
-		this->setTexture(*Textures.get(texture));
+		m_textures.load(Resource::Texture, texture);
+		this->setTexture(*m_textures.get(texture));
 		this->setPosition(sf::Vector2f(Main::screenWidth / positionX, Main::screenHeight / positionY));
 		this->setScale(sf::Vector2f(Main::screenWidth / scaleX, Main::screenHeight / scaleY));
 	}

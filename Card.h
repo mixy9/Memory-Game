@@ -14,9 +14,10 @@ protected:
 	bool m_showCard{ false };
 	sf::Clock m_clock;
 	size_t m_number;
-	int ID;
+	int m_currentId;
+	static int m_ID;
 
-public:
+public: 
 	Card();	
 	Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber);
 
@@ -24,12 +25,12 @@ public:
 	
 	void setPosition(float posX, float posY);
 	void animateCardFlip(sf::Time &elapsedTime, bool show);
-
+    
+	bool getID();
 	bool isShown(bool show);
 
 	int getNumber();
-	void setID();
-	int getID();
+
 	virtual void draw();
 	virtual void initialize() {};
 	virtual void update(sf::Time &elapsedTime);

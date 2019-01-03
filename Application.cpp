@@ -89,8 +89,9 @@ void Application::endGame()
 	SoundManager::getInstance()->stopMusic();
 	player.rating();
 	player.update(delta, seconds);
-	deck.resetCards();
 	clock.restart();
+	deck.clearChoices();
+	deck.resetCards();
 	if (menu.textClick())
 	{
 		// Play music when the game is repeated
@@ -101,12 +102,12 @@ void Application::endGame()
 void Application::updatePlaying()
 {
 	delta = clock.getElapsedTime();
-	deck.update(mouseWorldPosition, pCard, delta, player);
+	deck.update(mouseWorldPosition, delta);
 	player.update(delta, seconds);
 	if (pCard != nullptr)
 	{
-		pCard->update(delta);
-	}
+		pCard->update(delta); 
+	} 
 }
 
 void Application::processEvents()
@@ -139,6 +140,8 @@ void Application::processEvents()
 					else 
 					{
 						gameState = GameState::PLAYER_INPUT;
+						player.clearPlayerInput();
+						player.resetScore();
 					}
 				}
 			} 
@@ -156,17 +159,17 @@ void Application::processEvents()
 				{
 					if (deck.pickCards(pCard, player, delta))
 					{
+						deck.matched(player);
 						if (player.allMatching()) 
 						{
 							gameState = GameState::END;
 						}
-						deck.matched(player);
 					}
-					else if (deck.unmatched(delta)) 
-					{
-						deck.clearChoices();
-						deck.pickCards(pCard, player, delta);
-					}
+					else if (deck.unmatched(delta))
+						 { 
+							deck.clearChoices();
+							deck.pickCards(pCard, player, delta);
+						 }
 				}
 			}
 			else if (gameState == GameState::END)
@@ -180,9 +183,6 @@ void Application::processEvents()
 					else
 					{
 						gameState = GameState::PLAYER_INPUT;
-						player.clearPlayerInput();
-						player.resetScore();
-						deck.clearChoices();
 					}
 				}
 			}

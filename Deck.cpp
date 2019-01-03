@@ -1,5 +1,6 @@
 #include "Deck.h"
 
+int Card::m_ID = 0;
 
 
 Deck::Deck() :
@@ -8,20 +9,15 @@ Deck::Deck() :
 {
 }
 
-void Deck::addCard(sPtr<sf::Sprite>& sprite, size_t number)
-{
-	m_cards.push_back(std::make_shared<Card>(sprite, number));
-}
-
 void Deck::initialize()
-{ 
+{
 	const float spacing = Main::screenWidth / 10.11f;
 	float posX = Main::screenWidth / 3.5f;
 	float posY = Main::screenHeight / 24.0f;
 	const sf::Vector2f topLeftPosition(posX, posY);
 
 	for (auto i = 0; i < m_numberOfCards; ++i)
-	{ 
+	{
 		m_cards[i]->setSprite();
 		sf::Vector2f position(spacing * (i % m_rows), (spacing + (spacing / 3)) * (i / m_rows));
 		m_cards[i]->setPosition(topLeftPosition.x + position.x, topLeftPosition.y + position.y);
@@ -30,9 +26,9 @@ void Deck::initialize()
 
 void Deck::display()
 {
-	for (size_t i = 0; i < m_numberOfCards; ++i)
-	{
-		addCard(m_sprite, i / 2);
+	for (size_t i = 1; i <= m_numberOfCards; ++i)
+	{  
+		m_cards.push_back(std::make_shared<Card>(m_sprite, (i + 1) / 2));
 	}
 }
 
@@ -63,17 +59,20 @@ Card* Deck::clickCard(sf::Vector2f& mousePosition)
 }
 
 bool Deck::pickCards(Card* card, Player& player, sf::Time &elapsedTime)
-{ 
+{
 	if (m_cardPick[0] == nullptr)
 	{
-		m_cardPick[0] = card; 
+		m_cardPick[0] = card;
 		m_cardPick[0]->animateCardFlip(elapsedTime, false);
 	}
 	else if (m_cardPick[0] != nullptr && m_cardPick[1] == nullptr)
 	{
-		m_cardPick[1] = card; 
-		m_cardPick[1]->animateCardFlip(elapsedTime, false);
-		player.movesCounter++; 
+		m_cardPick[1] = card;
+		m_cardPick[1]->animateCardFlip(elapsedTime, false); 
+		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber())
+		{
+			player.movesCounter++;
+		}
 	} 
 	else return false;
 }
@@ -82,12 +81,12 @@ bool Deck::matched(Player& player)
 {
 	if (m_cardPick[0] != nullptr && m_cardPick[1] != nullptr)
 	{
-		if (m_cardPick[0]->getNumber() == m_cardPick[1]->getNumber())
+		if (m_cardPick[0]->getNumber() == m_cardPick[1]->getNumber() 
+			&& m_cardPick[0]->getID() != m_cardPick[1]->getID())
 		{
 			player.matchingCards++;
 			m_cardPick[0]->isShown(true);
 			m_cardPick[1]->isShown(true);
-			SoundManager::getInstance()->playSound(Resource::Sound, Filename::matchCards);
 		} 
 		return true;
 	}
@@ -98,7 +97,7 @@ bool Deck::unmatched(sf::Time &elapsedTime)
 {
 	if (m_cardPick[0] != nullptr && m_cardPick[1] != nullptr)
 	{
-		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber()) 
+		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber())
 		{
 			m_cardPick[0]->animateCardFlip(elapsedTime, true);
 			m_cardPick[1]->animateCardFlip(elapsedTime, true);
@@ -117,12 +116,12 @@ void Deck::drawDeck()
 }
 
 void Deck::clearChoices()
-{
+{ 
 	m_cardPick[0] = nullptr;
 	m_cardPick[1] = nullptr;
 }
 
-void Deck::update(sf::Vector2f& mousePosition, Card* card, sf::Time& elapsedTime, Player& player)
+void Deck::update(sf::Vector2f& mousePosition, sf::Time& elapsedTime)
 {	
 	clickCard(mousePosition);
 	unmatched(elapsedTime);
