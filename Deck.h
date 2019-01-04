@@ -27,9 +27,9 @@ public:
 
 	void drawDeck();
 	void clearChoices();
-
+	bool countMoves(Player& player);
 	virtual void initialize();
-	virtual void update(sf::Vector2f& mousePosition, sf::Time& elapsedTime);
+	virtual void update(sf::Time& elapsedTime);
 
 	~Deck();
 };

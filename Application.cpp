@@ -24,26 +24,21 @@ bool Application::initialize()
 	Main::window.setKeyRepeatEnabled(false);
 	Main::window.setFramerateLimit(60);
 
-	seconds = 0;
-
 	pCard = nullptr;
-
 	menu.initialize();
-
 	deck.display();
 	deck.shuffleCards();
 	deck.initialize();
-
 	player.initialize();
-	//SoundManager::getInstance()->playMusic(Filename::musicFilename);
+
+	SoundManager::getInstance()->playMusic(Filename::musicFilename);
 
 	return true;
 }
 
 void Application::update()
 {
-	menu.update();
-	seconds = static_cast<unsigned>(delta.asSeconds());
+	menu.update(delta);
 	if (gameState == GameState::PLAYER_INPUT)
 	{
 		delta = clock.restart();
@@ -86,12 +81,12 @@ void Application::display()
 
 void Application::endGame()
 {
-	SoundManager::getInstance()->stopMusic();
 	player.rating();
-	player.update(delta, seconds);
 	clock.restart();
-	deck.clearChoices();
 	deck.resetCards();
+	deck.clearChoices();
+	player.update(delta);
+	SoundManager::getInstance()->stopMusic();
 	if (menu.textClick())
 	{
 		// Play music when the game is repeated
@@ -102,12 +97,13 @@ void Application::endGame()
 void Application::updatePlaying()
 {
 	delta = clock.getElapsedTime();
-	deck.update(mouseWorldPosition, delta);
-	player.update(delta, seconds);
-	if (pCard != nullptr)
-	{
-		pCard->update(delta); 
-	} 
+	deck.clickCard(mouseWorldPosition);
+	deck.update(delta);
+	player.update(delta);  
+	if (pCard == nullptr)
+	{ 
+		deck.unmatched(delta);
+	}
 }
 
 void Application::processEvents()
@@ -140,8 +136,6 @@ void Application::processEvents()
 					else 
 					{
 						gameState = GameState::PLAYER_INPUT;
-						player.clearPlayerInput();
-						player.resetScore();
 					}
 				}
 			} 
@@ -153,23 +147,23 @@ void Application::processEvents()
 				}
 			}
 			else if (gameState == GameState::PLAYING)
-			{
+			{ 
 				pCard = deck.clickCard(mouseWorldPosition);
 				if (pCard)
 				{
 					if (deck.pickCards(pCard, player, delta))
-					{
+					{ 
 						deck.matched(player);
-						if (player.allMatching()) 
+						if (player.allMatching())
 						{
 							gameState = GameState::END;
 						}
 					}
 					else if (deck.unmatched(delta))
-						 { 
-							deck.clearChoices();
-							deck.pickCards(pCard, player, delta);
-						 }
+					{
+						deck.clearChoices();
+						deck.pickCards(pCard, player, delta);
+					}
 				}
 			}
 			else if (gameState == GameState::END)
@@ -183,6 +177,9 @@ void Application::processEvents()
 					else
 					{
 						gameState = GameState::PLAYER_INPUT;
+						menu.isMusicOn();
+						player.clearPlayerInput();
+						player.resetScore();
 					}
 				}
 			}

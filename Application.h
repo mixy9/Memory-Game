@@ -32,8 +32,6 @@ private:
 	};
 	GameState gameState = GameState::INTRO;
 
-	unsigned int seconds;
-
 public:
 	Application();
 

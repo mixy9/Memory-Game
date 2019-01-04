@@ -25,11 +25,11 @@ public:
 	
 	void setPosition(float posX, float posY);
 	void animateCardFlip(sf::Time &elapsedTime, bool show);
-    
-	bool getID();
-	bool isShown(bool show);
 
 	int getNumber();
+
+	bool getID();
+	bool isShown(bool show);
 
 	virtual void draw();
 	virtual void initialize() {};

@@ -27,6 +27,7 @@ public:
 
 	bool quitRect();
 	bool textClick();
+	bool isMusicOn();
 	bool mouseHover(sPtr<TextNode> text);
 
 	void header();
@@ -36,7 +37,7 @@ public:
 	void musicSwitch();
 
 	virtual void draw();
-	virtual void update();
+	virtual void update(sf::Time& elapsedTime);
 
 	~Menu();
 };

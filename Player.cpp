@@ -3,24 +3,25 @@
 
 
 Player::Player() :
+	seconds(0),
 	movesCounter(0),
     matchingCards(0)
 {		
 }
 
 void Player::initialize()
-{	
+{
+	m_paper = std::make_unique<SpriteNode>(Filename::paper, 50.f, 16.f, 1290.f, 853.f);
+
 	m_textUnderline.setPosition(sf::Vector2f(Main::screenWidth / 2.5f, Main::screenHeight / 1.6f));
 	m_textUnderline.setSize(sf::Vector2f(Main::screenWidth / 3.4f, Main::screenHeight / 307.f));
 	m_textUnderline.setFillColor(sf::Color::White);
 
-	m_paper = std::make_unique<SpriteNode>(Filename::paper, 50.f, 16.f, 1290.f, 853.f);
-
 	name = std::make_shared<TextNode>(PLAYER_TEXT, 17u, 4.1f, 2.f, sf::Color::White, Filename::font2);
-	playerName = std::make_shared<TextNode>("", 17u, NULL, NULL, sf::Color(121, 77, 36), Filename::font2);
-	result = std::make_shared<TextNode>("", 27u, 3.7f, 2.3f, sf::Color::White, Filename::font2);
-	hud = std::make_shared<TextNode>("", 40u, 19.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
-	star = std::make_shared<TextNode>("", 11u, 2.5f, 2.f, sf::Color(255, 173, 51), Filename::font2);
+	result = std::make_shared<TextNode>(TEXT_INPUT, 27u, 3.7f, 2.3f, sf::Color::White, Filename::font2);
+	hud = std::make_shared<TextNode>(TEXT_INPUT, 40u, 21.f, 4.5f, sf::Color(121, 77, 36), Filename::font2);
+	star = std::make_shared<TextNode>(TEXT_INPUT, 11u, 2.5f, 2.f, sf::Color(255, 173, 51), Filename::font2);
+	playerName = std::make_shared<TextNode>(TEXT_INPUT, 17u, NULL, NULL, sf::Color(121, 77, 36), Filename::font2);
 
 	star->setOutlineThickness(2.f);
 	star->setOutlineColor(sf::Color::White);
@@ -35,7 +36,8 @@ void Player::playerInput(sf::Event& Event)
 		m_inputtedText += uCode;
 	}
 	// Delete characters using the backspace key
-	else if (uCode == 8 && m_inputtedText.getSize() > 0) {
+	else if (uCode == 8 && m_inputtedText.getSize() > 0) 
+	{
 		m_inputtedText.erase(m_inputtedText.getSize() - 1, m_inputtedText.getSize());
 	}
 }
@@ -49,13 +51,16 @@ void Player::clearPlayerInput()
 void Player::rating()
 {
 	std::stringstream rating;
-	if (movesCounter <= 20) {
+	if (movesCounter <= 20) 
+	{
 		rating << "* * *";
 	}
-	else if (movesCounter > 20 && movesCounter <= 30) {
+	else if (movesCounter > 20 && movesCounter <= 30) 
+	{
 		rating << "* *";
 	}
-	else if (movesCounter > 30) {
+	else if (movesCounter > 30) 
+	{
 		rating << "*";
 	}
 	star->setString(rating.str());
@@ -81,9 +86,7 @@ void Player::drawResult()
 
 void Player::resetScore()
 {
-	minutes = 0; 
-	movesCounter = 0; 
-	matchingCards = 0;
+	minutes = movesCounter = matchingCards = 0;
 }
 
 bool Player::allMatching()
@@ -100,11 +103,13 @@ void Player::draw()
 	Main::window.draw(*name);
 }
 
-void Player::update(sf::Time& elapsedTime, unsigned int seconds)
+void Player::update(sf::Time& elapsedTime)
 {
 	// Time setting loop
+	seconds = static_cast<unsigned>(elapsedTime.asSeconds());
 	minutes = 0;
-	while (seconds > 60) {
+	while (seconds > 59) 
+	{
 		minutes++;
 		seconds -= 60;
 	}

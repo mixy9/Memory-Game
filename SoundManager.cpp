@@ -5,8 +5,9 @@
 SoundManager* SoundManager::instance = nullptr;
 SoundManager::MusicState SoundManager::currentState = MusicState::PLAYING;
 
-
-SoundManager::SoundManager() {}
+SoundManager::SoundManager()
+{
+}
 
 SoundManager* SoundManager::getInstance()
 {

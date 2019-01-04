@@ -6,11 +6,6 @@ SceneNode::SceneNode()
 {
 }
 
-void SceneNode::update()
-{
-	// Do nothing by default
-}
-
 void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	// Apply transform of current node
@@ -21,4 +16,8 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates) const
 {
 	// Do nothing by default
+}
+
+SceneNode::~SceneNode()
+{
 }

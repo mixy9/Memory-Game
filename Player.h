@@ -1,11 +1,10 @@
 #pragma once
 
 #include "stdafx.h"
-#include "ResourceHolder.h"
 #include "TextNode.h"
 #include "SceneNode.h"
 #include "SpriteNode.h"
-
+#include "ResourceHolder.h"
 
 
 
@@ -15,8 +14,9 @@ protected:
 	sPtr<SpriteNode> m_paper;
 	sf::String m_inputtedText;
 	sf::RectangleShape m_textUnderline;
-	unsigned int minutes, movesCounter, matchingCards;
-	sPtr<TextNode> name, playerName, hud, result, star;
+
+	sPtr<TextNode> name, hud, result, star, playerName;
+	unsigned int seconds, minutes, movesCounter, matchingCards;
 	
 public:
 	Player();
@@ -35,7 +35,7 @@ public:
 	bool allMatching();
 
 	virtual void draw();
-	virtual void update(sf::Time& elapsedTime, unsigned int seconds);
+	virtual void update(sf::Time& elapsedTime);
 	
 	~Player();
 };

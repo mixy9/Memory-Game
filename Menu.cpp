@@ -46,6 +46,11 @@ bool Menu::textClick()
 	return it != m_menuButtons.end() ? (*it).get() : nullptr;
 }
 
+bool Menu::isMusicOn()
+{
+	return m_isMusicOn = true;
+}
+
 bool Menu::mouseHover(sPtr<TextNode> text)
 {
 	if (text->getGlobalBounds().contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y))
@@ -81,7 +86,6 @@ void Menu::drawEnd()
 void Menu::drawInput()
 {
 	header();
-	m_isMusicOn == true;
 	Main::window.draw(*okay);
 }
 
@@ -117,7 +121,7 @@ void Menu::draw()
 	m_mouseWorldPosition = Main::window.mapPixelToCoords(m_mouseScreenPosition);
 }
 
-void Menu::update()
+void Menu::update(sf::Time& elapsedTime)
 {
 	m_mouseScreenPosition = sf::Mouse::getPosition();
 	for (auto& text : m_menuButtons)

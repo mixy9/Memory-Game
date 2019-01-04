@@ -1,5 +1,7 @@
 #include "Deck.h"
 
+
+// Each instance of the object requires a unique id
 int Card::m_ID = 0;
 
 
@@ -36,7 +38,7 @@ void Deck::resetCards()
 {
 	// Shuffle and hide all cards before starting a new game
 	for (auto& card : m_cards)
-	{
+	{ 
 		card->isShown(false);
 	}
 	this->shuffleCards();
@@ -63,15 +65,13 @@ bool Deck::pickCards(Card* card, Player& player, sf::Time &elapsedTime)
 	if (m_cardPick[0] == nullptr)
 	{
 		m_cardPick[0] = card;
-		m_cardPick[0]->animateCardFlip(elapsedTime, false);
 	}
 	else if (m_cardPick[0] != nullptr && m_cardPick[1] == nullptr)
 	{
 		m_cardPick[1] = card;
-		m_cardPick[1]->animateCardFlip(elapsedTime, false); 
-		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber())
+		if (m_cardPick[0]->getID() != m_cardPick[1]->getID())
 		{
-			player.movesCounter++;
+			  player.movesCounter++;
 		}
 	} 
 	else return false;
@@ -121,10 +121,16 @@ void Deck::clearChoices()
 	m_cardPick[1] = nullptr;
 }
 
-void Deck::update(sf::Vector2f& mousePosition, sf::Time& elapsedTime)
+void Deck::update(sf::Time& elapsedTime)
 {	
-	clickCard(mousePosition);
-	unmatched(elapsedTime);
+	if (m_cardPick[0] != nullptr)
+	{
+		m_cardPick[0]->animateCardFlip(elapsedTime, false);
+	}
+	if (m_cardPick[1] != nullptr)
+	{
+		m_cardPick[1]->animateCardFlip(elapsedTime, false);
+	}
 }
 
 Deck::~Deck()
