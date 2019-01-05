@@ -118,7 +118,7 @@ void Application::processEvents()
 		if ((Event.type == sf::Event::MouseButtonReleased))
 		{
 			pCard && gameState != GameState::END ? SoundManager::getInstance()->playSound(Resource::Sound, Filename::cardFlip)
-				: SoundManager::getInstance()->playSound(Resource::Sound, Filename::clickSound);
+				: SoundManager::getInstance()->playSound(Resource::Sound, Filename::clickSound); 
 		}
 		if ((Event.type == sf::Event::MouseButtonPressed) && (Event.mouseButton.button == sf::Mouse::Left))
 		{
@@ -152,8 +152,7 @@ void Application::processEvents()
 				if (pCard)
 				{
 					if (deck.pickCards(pCard, player, delta))
-					{ 
-						deck.matched(player);
+					{  
 						if (player.allMatching())
 						{
 							gameState = GameState::END;
@@ -161,7 +160,7 @@ void Application::processEvents()
 					}
 					else if (deck.unmatched(delta))
 					{
-						deck.clearChoices();
+					    deck.clearChoices();
 						deck.pickCards(pCard, player, delta);
 					}
 				}

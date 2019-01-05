@@ -37,6 +37,6 @@ namespace Filename
 	const std::string cardFlip("Audio/cardFlip.wav");
 	const std::string matchCards("Audio/matchSound.wav");
 	const std::string clickSound("Audio/mouseClick.wav");
-	const std::string musicFilename("Audio/musicRanch.ogg");
+	const std::string musicFilename("Audio/music_acoustic.ogg");
 }
 

@@ -1,9 +1,7 @@
 #include "Deck.h"
 
 
-// Each instance of the object requires a unique id
 int Card::m_ID = 0;
-
 
 Deck::Deck() :
 	m_rows(6),
@@ -29,7 +27,7 @@ void Deck::initialize()
 void Deck::display()
 {
 	for (size_t i = 1; i <= m_numberOfCards; ++i)
-	{  
+	{   
 		m_cards.push_back(std::make_shared<Card>(m_sprite, (i + 1) / 2));
 	}
 }
@@ -73,23 +71,11 @@ bool Deck::pickCards(Card* card, Player& player, sf::Time &elapsedTime)
 		{
 			  player.movesCounter++;
 		}
-	} 
-	else return false;
-}
-
-bool Deck::matched(Player& player)
-{
-	if (m_cardPick[0] != nullptr && m_cardPick[1] != nullptr)
-	{
-		if (m_cardPick[0]->getNumber() == m_cardPick[1]->getNumber() 
-			&& m_cardPick[0]->getID() != m_cardPick[1]->getID())
+		if (m_cardPick[0] != nullptr && m_cardPick[1] != nullptr)
 		{
-			player.matchingCards++;
-			m_cardPick[0]->isShown(true);
-			m_cardPick[1]->isShown(true);
-		} 
-		return true;
-	}
+			matched(player);  
+		}
+	} 
 	else return false;
 }
 
@@ -107,18 +93,30 @@ bool Deck::unmatched(sf::Time &elapsedTime)
 	else return false;
 }
 
+void Deck::matched(Player& player)
+{
+	if (m_cardPick[0]->getNumber() == m_cardPick[1]->getNumber() &&
+		m_cardPick[0]->getID() != m_cardPick[1]->getID())
+	{
+		player.matchingCards++;
+		m_cardPick[0]->isShown(true);
+		m_cardPick[1]->isShown(true);  
+		SoundManager::getInstance()->playSound(Resource::Sound, Filename::matchCards);
+	}
+}
+
+void Deck::clearChoices()
+{
+	m_cardPick[0] = nullptr;
+	m_cardPick[1] = nullptr;
+}
+
 void Deck::drawDeck()
 {
 	for (auto& card : m_cards)
 	{
 		card->draw();
 	}
-}
-
-void Deck::clearChoices()
-{ 
-	m_cardPick[0] = nullptr;
-	m_cardPick[1] = nullptr;
 }
 
 void Deck::update(sf::Time& elapsedTime)

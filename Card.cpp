@@ -6,7 +6,7 @@ Card::Card()
 }
 
 Card::Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber) :
-	m_sprite(cardSprite), m_number(cardNumber)
+	m_sprite(cardSprite), m_number(cardNumber), m_showCard(false)
 {
 	m_sprite = std::make_shared<sf::Sprite>();
 	m_sprite->setScale(sf::Vector2f(Main::cardWidht, Main::cardHeight));
@@ -20,6 +20,7 @@ int Card::getNumber()
 
 bool Card::getID()
 {
+	// Each instance of the object requires a unique id
 	if (m_showCard == true)
 	return m_ID++;
 }
@@ -62,8 +63,7 @@ void Card::animateCardFlip(sf::Time &elapsedTime, bool show)
 		}
 	} 
 	if (currentTime > spinTime / 2.f) 
-	{
-		sf::sleep(sf::milliseconds(20));
+	{ 
 		float scale = (currentTime - halfSpinTime) / halfSpinTime;
 		m_sprite->setScale(std::sin(scale * PI() / 2.f) * Main::cardWidht, Main::cardHeight);
 		this->isShown(show);

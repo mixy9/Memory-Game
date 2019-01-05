@@ -11,10 +11,11 @@ protected:
 	ResourceHolder<sf::Texture> m_texture;
 	std::string m_frontCardTexture;
 	sPtr<sf::Sprite> m_sprite;
-	bool m_showCard{ false };
 	sf::Clock m_clock;
 	size_t m_number;
+
 	int m_currentId;
+	bool m_showCard;
 	static int m_ID;
 
 public: 

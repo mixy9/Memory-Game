@@ -22,12 +22,12 @@ public:
 	Card* clickCard(sf::Vector2f& mousePosition);
 
 	bool pickCards(Card* card, Player& player, sf::Time &elapsedTime);
-	bool matched(Player& player);
 	bool unmatched(sf::Time &elapsedTime);
 
-	void drawDeck();
+	void matched(Player& player);
 	void clearChoices();
-	bool countMoves(Player& player);
+	void drawDeck();
+
 	virtual void initialize();
 	virtual void update(sf::Time& elapsedTime);
 
