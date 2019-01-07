@@ -17,11 +17,11 @@ class ResourceHolder
 {
 private:
 	
-	std::unordered_map<std::string, std::shared_ptr<T>> resources;
+	std::map<std::string, std::shared_ptr<T>> resources;
 
 public:
 
-	void load(Resource::ID id, const std::string &filename)
+	void load(Resource::ID id, cStr &filename)
 	{
 		// Load the resource from a file on disk
 		T resource;
@@ -30,7 +30,7 @@ public:
 		resources.emplace(filename, std::make_shared<T>(resource));
 	}
 
-	const std::shared_ptr<T>& get(const std::string &filename)
+	const std::shared_ptr<T>& get(cStr &filename)
 	{
 		// Get the source
 		return resources[filename];

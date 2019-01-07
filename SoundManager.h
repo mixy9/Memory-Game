@@ -21,7 +21,7 @@ private:
 		PAUSED
 	};
 	static MusicState currentState;
-
+	
 	SoundManager();
 
 public:

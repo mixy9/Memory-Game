@@ -22,21 +22,22 @@ namespace Main
 namespace Filename
 {
 	// Fonts:
-	const std::string font1("Fonts/love.ttf");
-	const std::string font2("Fonts/Madpakke.ttf");
+	cStr font1("Fonts/love.ttf");
+	cStr font2("Fonts/Madpakke.ttf");
 
 	// Textures:
-	const std::string menu("Graphics/menu.png");
-	const std::string paper("Graphics/paper.png");
-	const std::string sound("Graphics/sound.png");
-	const std::string noSound("Graphics/noSound.png");
-	const std::string backCard("Graphics/backCard.png");
-	const std::string background("Graphics/background.jpg");
+	cStr menu("Graphics/menu.png");
+	cStr paper("Graphics/paper.png");
+	cStr sound("Graphics/sound.png");
+	cStr noSound("Graphics/noSound.png");
+	cStr backCard("Graphics/backCard.png");
+	cStr background("Graphics/background.jpg");
 
 	// Audio:
-	const std::string cardFlip("Audio/cardFlip.wav");
-	const std::string matchCards("Audio/matchSound.wav");
-	const std::string clickSound("Audio/mouseClick.wav");
-	const std::string musicFilename("Audio/music_acoustic.ogg");
+	cStr cardFlip("Audio/cardFlip.wav");
+	cStr clickSound("Audio/mouseClick.wav");
+	cStr matchedSound("Audio/matchedSound.wav");
+	cStr musicFilename("Audio/music_acoustic.ogg");
+	cStr unmatchedSound("Audio/unmatchedSound.wav");
 }
 

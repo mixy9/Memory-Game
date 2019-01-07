@@ -24,7 +24,7 @@ void SoundManager::playSound(Resource::ID id, std::string filename)
 	m_sound.setBuffer(*m_soundBuffer.get(filename));
 	m_sound.play();
 	m_sound.setPitch(3);
-	m_sound.setVolume(20);
+	m_sound.setVolume(20); 
 }
 
 void SoundManager::playMusic(std::string filename)
