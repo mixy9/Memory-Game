@@ -13,8 +13,8 @@ void Player::initialize()
 {
 	m_paper = std::make_unique<SpriteNode>(Filename::paper, 50.f, 16.f, 1290.f, 853.f);
 
-	m_textUnderline.setPosition(sf::Vector2f(Main::screenWidth / 2.5f, Main::screenHeight / 1.6f));
-	m_textUnderline.setSize(sf::Vector2f(Main::screenWidth / 3.4f, Main::screenHeight / 307.f));
+	m_textUnderline.setPosition(sf::Vector2f(Screen::screenWidth / 2.5f, Screen::screenHeight / 1.6f));
+	m_textUnderline.setSize(sf::Vector2f(Screen::screenWidth / 3.4f, Screen::screenHeight / 307.f));
 	m_textUnderline.setFillColor(sf::Color::White);
 
 	name = std::make_shared<TextNode>(PLAYER_TEXT, 17u, 4.1f, 2.f, sf::Color::White, Filename::font2);
@@ -68,20 +68,20 @@ void Player::rating()
 
 void Player::drawHud()
 {
-	playerName->setCharacterSize(Main::screenWidth / 27u);
-	playerName->setPosition(sf::Vector2f(Main::screenWidth / 18.f, Main::screenHeight / 7.5f));
-	Main::window.draw(*m_paper);
-	Main::window.draw(*playerName);
-	Main::window.draw(*hud);
+	playerName->setCharacterSize(Screen::screenWidth / 27u);
+	playerName->setPosition(sf::Vector2f(Screen::screenWidth / 18.f, Screen::screenHeight / 7.5f));
+	Screen::window.draw(*m_paper);
+	Screen::window.draw(*playerName);
+	Screen::window.draw(*hud);
 }
 
 void Player::drawResult()
 {
-	playerName->setCharacterSize(Main::screenWidth / 17u);
-	playerName->setPosition(sf::Vector2f(Main::screenWidth / 1.7f, Main::screenHeight / 3.4f));
-	Main::window.draw(*playerName);
-	Main::window.draw(*result);
-	Main::window.draw(*star);
+	playerName->setCharacterSize(Screen::screenWidth / 17u);
+	playerName->setPosition(sf::Vector2f(Screen::screenWidth / 1.7f, Screen::screenHeight / 3.4f));
+	Screen::window.draw(*playerName);
+	Screen::window.draw(*result);
+	Screen::window.draw(*star);
 }
 
 void Player::resetScore()
@@ -96,11 +96,11 @@ bool Player::allMatching()
 
 void Player::draw()
 {
-	playerName->setPosition(sf::Vector2f(Main::screenWidth / 2.4f, Main::screenHeight / 2.f));
+	playerName->setPosition(sf::Vector2f(Screen::screenWidth / 2.4f, Screen::screenHeight / 2.f));
 	playerName->setString(m_inputtedText);
-	Main::window.draw(m_textUnderline);
-	Main::window.draw(*playerName);
-	Main::window.draw(*name);
+	Screen::window.draw(m_textUnderline);
+	Screen::window.draw(*playerName);
+	Screen::window.draw(*name);
 }
 
 void Player::update(sf::Time& elapsedTime)

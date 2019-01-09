@@ -7,15 +7,12 @@
 
 
 
-namespace Main
+namespace Screen
 {
 	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Memory Game", sf::Style::Fullscreen);
 
 	unsigned int screenWidth = sf::VideoMode::getDesktopMode().width;
 	unsigned int screenHeight = sf::VideoMode::getDesktopMode().height;
-
-	float cardWidht = screenWidth / 2101.53f;
-	float cardHeight = screenHeight / 1129.41f;
 }
 
 

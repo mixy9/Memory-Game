@@ -15,13 +15,13 @@ public:
 
 	~TextNode() {};
 	
-	TextNode(std::string string, size_t size, float positionX, float positionY, sf::Color(color), std::string font)
+	TextNode(cStr string, size_t size, float positionX, float positionY, sf::Color(color), cStr font)
 	{
-		m_font.load(Resource::Font, font);
+		m_font.load(Resource::Fonts, font);
 		this->setString(string);
 		this->setFont(*m_font.get(font));
 		this->setFillColor(sf::Color(color));
-		this->setCharacterSize(Main::screenWidth / size);
-		this->setPosition(sf::Vector2f(Main::screenWidth / positionX, Main::screenHeight / positionY));
+		this->setCharacterSize(Screen::screenWidth / size);
+		this->setPosition(sf::Vector2f(Screen::screenWidth / positionX, Screen::screenHeight / positionY));
 	}
 };

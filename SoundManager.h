@@ -15,14 +15,14 @@ private:
 	sf::Sound m_sound;
 	sf::Music m_music;
 
+	SoundManager();
+
 	enum class MusicState
 	{
 		PLAYING,
 		PAUSED
 	};
 	static MusicState currentState;
-	
-	SoundManager();
 
 public:
 	static SoundManager* getInstance();	

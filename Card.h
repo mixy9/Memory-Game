@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ResourceHolder.h"
+#include "SpriteNode.h"
 #include "SceneNode.h"
 
 
@@ -8,33 +9,30 @@
 class Card : public SceneNode
 {
 protected:
-	ResourceHolder<sf::Texture> m_texture;
-	std::string m_frontCardTexture;
-	sPtr<sf::Sprite> m_frontSprite, m_backSprite;
-	sf::Clock m_clock;
 	size_t m_number;
-	
-	bool m_showCard;
-	static int m_ID;
-
+	sf::Clock m_clock;
+	bool m_active, m_showCard;
+	std::string m_frontCardTexture;
+	ResourceHolder<sf::Texture> m_texture;
+	sPtr<SpriteNode> m_frontSprite, m_backSprite;
 public: 
 	Card();	
-	Card(sPtr<sf::Sprite>& cardSprite, size_t cardNumber);
+	Card(sPtr<SpriteNode>& cardSprite, size_t cardNumber);
 
-	sf::Sprite& setFrontSprite();
 	sf::Sprite& setBackSprite();
+	sf::Sprite& setFrontSprite();
 	
 	void setPosition(float posX, float posY);
-	void animateCardFlip(sf::Time &elapsedTime, bool show);
+	void animateCardFlip(sf::Time& elapsedTime, bool show);
 
-	int getNumber(); 
+	int getNumber();
 
-	bool getID();
+	bool isActive();
 	bool isShown(bool show);
 
 	virtual void draw();
 	virtual void initialize() {};
-	virtual void update(sf::Time &elapsedTime) {};
+	virtual void update(sf::Time& elapsedTime) {};
 
 	~Card();
 };

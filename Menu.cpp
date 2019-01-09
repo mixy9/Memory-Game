@@ -12,8 +12,8 @@ void Menu::initialize()
 	menuSprite = std::make_shared<SpriteNode>(Filename::menu, 2.9f, 1.9f, 3902.85f, 2194.28f);
 	soundSprite = std::make_shared<SpriteNode>(Filename::sound, 1.09f, 19.f, 1366.f, 768.f);
 	noSoundSprite = std::make_shared<SpriteNode>(Filename::noSound, 1.09f, 19.f, 1366.f, 768.f);
-	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Main::screenWidth, Main::screenHeight, NULL, NULL);
-	backgroundSprite->setScale(Main::screenWidth / backgroundSprite->getLocalBounds().width, Main::screenHeight / backgroundSprite->getLocalBounds().height); 
+	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Screen::screenWidth, Screen::screenHeight, NULL, NULL);
+	backgroundSprite->setScale(Screen::screenWidth / backgroundSprite->getLocalBounds().width, Screen::screenHeight / backgroundSprite->getLocalBounds().height);
 
 	okay = std::make_shared<TextNode>(OK_BUTTON, 12u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
 	quit = std::make_shared<TextNode>(QUIT_BUTTON, 18u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
@@ -40,7 +40,7 @@ bool Menu::quitRect()
 
 bool Menu::textClick()
 {
-	// Check if text is clicked
+	// Check if a text button is clicked
 	std::vector<sPtr<TextNode>>::iterator it = std::find_if(m_menuButtons.begin(), m_menuButtons.end(), [=](sPtr<TextNode>& text) -> bool
 	{ return (text->getGlobalBounds().contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y) && mouseHover(text)); });	
 	return it != m_menuButtons.end() ? (*it).get() : nullptr;
@@ -67,35 +67,35 @@ bool Menu::mouseHover(sPtr<TextNode> text)
 
 void Menu::header()
 {
-	title->setCharacterSize(Main::screenWidth / 12u);
-	title->setPosition(Main::screenWidth / 2.7f, Main::screenHeight / 28.f);
-	game->setCharacterSize(Main::screenWidth / 15u);
-	game->setPosition(Main::screenWidth / 2.3f, Main::screenHeight / 7.4f);
-	Main::window.draw(*title);
-	Main::window.draw(*game);
+	title->setCharacterSize(Screen::screenWidth / 12u);
+	title->setPosition(Screen::screenWidth / 2.7f, Screen::screenHeight / 28.f);
+	game->setCharacterSize(Screen::screenWidth / 15u);
+	game->setPosition(Screen::screenWidth / 2.3f, Screen::screenHeight / 7.4f);
+	Screen::window.draw(*title);
+	Screen::window.draw(*game);
 }
 
 void Menu::drawEnd()
 {
 	header();
-	Main::window.draw(*repeat);
-	Main::window.draw(*theEnd);
-	Main::window.draw(*quit);
+	Screen::window.draw(*repeat);
+	Screen::window.draw(*theEnd);
+	Screen::window.draw(*quit);
 }
 
 void Menu::drawInput()
 {
 	header();
-	Main::window.draw(*okay);
+	Screen::window.draw(*okay);
 }
 
 void Menu::drawIntro()
 {
-	Main::window.draw(*menuSprite);
-	Main::window.draw(*title);
-	Main::window.draw(*game);
-	Main::window.draw(*play);
-	Main::window.draw(*quit);
+	Screen::window.draw(*menuSprite);
+	Screen::window.draw(*title);
+	Screen::window.draw(*game);
+	Screen::window.draw(*play);
+	Screen::window.draw(*quit);
 }
 
 void Menu::musicSwitch()
@@ -116,9 +116,9 @@ void Menu::musicSwitch()
 
 void Menu::draw()
 {
-	Main::window.draw(*backgroundSprite);
-	m_isMusicOn ? Main::window.draw(*soundSprite) : Main::window.draw(*noSoundSprite);
-	m_mouseWorldPosition = Main::window.mapPixelToCoords(m_mouseScreenPosition);
+	Screen::window.draw(*backgroundSprite);
+	m_isMusicOn ? Screen::window.draw(*soundSprite) : Screen::window.draw(*noSoundSprite);
+	m_mouseWorldPosition = Screen::window.mapPixelToCoords(m_mouseScreenPosition);
 }
 
 void Menu::update(sf::Time& elapsedTime)

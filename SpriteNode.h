@@ -16,12 +16,12 @@ public:
 
 	~SpriteNode() {};
 
-	SpriteNode(std::string texture, float positionX, float positionY, float scaleX, float scaleY)
+	SpriteNode(cStr texture, float positionX, float positionY, float scaleX, float scaleY)
 	{
-		m_texture.load(Resource::Texture, texture);
+		m_texture.load(Resource::Textures, texture);
 		this->setTexture(*m_texture.get(texture));
-		this->setPosition(sf::Vector2f(Main::screenWidth / positionX, Main::screenHeight / positionY));
-		this->setScale(sf::Vector2f(Main::screenWidth / scaleX, Main::screenHeight / scaleY));
+		this->setPosition(sf::Vector2f(Screen::screenWidth / positionX, Screen::screenHeight / positionY));
+		this->setScale(sf::Vector2f(Screen::screenWidth / scaleX, Screen::screenHeight / scaleY));
 	}
 };
 

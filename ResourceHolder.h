@@ -7,7 +7,7 @@ namespace Resource
 {
 	enum ID
 	{
-		Texture, Sound, Font
+		Textures, Sounds, Fonts
 	};
 }
 

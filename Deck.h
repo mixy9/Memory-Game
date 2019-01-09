@@ -21,10 +21,10 @@ public:
 
 	Card* clickCard(sf::Vector2f& mousePosition);
 
-	bool pickCards(Card* card, Player& player, sf::Time &elapsedTime);
+	bool pickCards(Card* card, Player& player, sf::Time& elapsedTime);
 	bool unmatched(sf::Time &elapsedTime);
+	bool matched(Player& player);
 
-	void matched(Player& player);
 	void clearChoices();
 	void drawDeck();
 

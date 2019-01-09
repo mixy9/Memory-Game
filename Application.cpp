@@ -8,11 +8,11 @@ Application::Application()
 
 int Application::execute()
 {
-	while (Main::window.isOpen())
+	while (Screen::window.isOpen())
 	{
-		Main::window.clear();
+		Screen::window.clear();
 		display();
-		Main::window.display();
+		Screen::window.display();
 		processEvents();
 		update();
 	}
@@ -21,14 +21,13 @@ int Application::execute()
 
 bool Application::initialize()
 {
-	Main::window.setKeyRepeatEnabled(false);
-	Main::window.setFramerateLimit(60);
+	Screen::window.setKeyRepeatEnabled(false);
+	Screen::window.setFramerateLimit(60);
 
 	pCard = nullptr;
 	menu.initialize();
 	deck.display();
 	deck.shuffleCards();
-	deck.initialize();
 	player.initialize();
 
 	SoundManager::getInstance()->playMusic(Filename::musicFilename);
@@ -97,77 +96,75 @@ void Application::updatePlaying()
 {
 	delta = clock.getElapsedTime();
 	player.update(delta);
-	deck.clickCard(mouseWorldPosition);
-	deck.update(delta); 
+	deck.update(delta);
 }
 
 void Application::processEvents()
 {
-	while (Main::window.pollEvent(Event))
+	while (Screen::window.pollEvent(Event))
 	{
 		if ((Event.type == sf::Event::Closed) || (Event.type == sf::Event::KeyPressed)
 			&& (Event.key.code == sf::Keyboard::Escape))
 		{
-			Main::window.close();
+			Screen::window.close();
 		}
 		if ((Event.type == sf::Event::MouseButtonReleased))
 		{
-			pCard && gameState == GameState::PLAYING ? SoundManager::getInstance()->playSound(Resource::Sound, Filename::cardFlip)
-				: SoundManager::getInstance()->playSound(Resource::Sound, Filename::clickSound); 
+			pCard && gameState == GameState::PLAYING 
+			? SoundManager::getInstance()->playSound(Resource::Sounds, Filename::cardFlip)
+			: SoundManager::getInstance()->playSound(Resource::Sounds, Filename::clickSound); 
 		}
 		if ((Event.type == sf::Event::MouseButtonPressed) && (Event.mouseButton.button == sf::Mouse::Left))
 		{
+			menu.musicSwitch();
 			mouseScreenPosition = sf::Mouse::getPosition();
-			mouseWorldPosition = Main::window.mapPixelToCoords(sf::Mouse::getPosition());
-			menu.musicSwitch(); 
+			mouseWorldPosition = Screen::window.mapPixelToCoords(sf::Mouse::getPosition());
 			if (gameState == GameState::INTRO)
 			{
 				if (menu.textClick())
 				{
 					if (menu.quitRect())
 					{
-						Main::window.close();
+						Screen::window.close();
 					}
 					else 
 					{
 						gameState = GameState::PLAYER_INPUT;
 					}
-				}
+				} 
 			} 
 			else if (gameState == GameState::PLAYER_INPUT)
 			{
 				if (menu.textClick())
 				{
 					gameState = GameState::PLAYING;
+					deck.initialize();
 				}
 			}
 			else if (gameState == GameState::PLAYING)
 			{
 				pCard = deck.clickCard(mouseWorldPosition);
-				if (pCard)
-				{
-					if (deck.pickCards(pCard, player, delta))
+				if (pCard && deck.pickCards(pCard, player, delta))
+				{ 
+					deck.matched(player);
+					if (player.allMatching())
 					{
-						deck.matched(player);  
-						if (player.allMatching())
-						{
-							gameState = GameState::END;
-						}
-					}
-					else if (deck.unmatched(delta))
-					{
-						deck.clearChoices();
-						deck.pickCards(pCard, player, delta);
+						gameState = GameState::END;
 					}
 				}
+				else if (pCard && deck.unmatched(delta))
+				{
+					deck.clearChoices(); 
+					deck.pickCards(pCard, player, delta);
+				} 
 			}
 			else if (gameState == GameState::END)
-			{ 
+			{
 				if (menu.textClick())
 				{
 					if (menu.quitRect())
 					{
-						Main::window.close();
+						Screen::window.close();
 					}
 					else
 					{
