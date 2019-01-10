@@ -29,7 +29,7 @@ public:
 	void drawDeck();
 
 	virtual void initialize();
-	virtual void update(sf::Time& elapsedTime);
+	virtual void update(sf::Time& elapsedTime) {};
 
 	~Deck();
 };

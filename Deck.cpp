@@ -54,7 +54,7 @@ Card* Deck::clickCard(sf::Vector2f& mousePosition)
 {
 	// Check if a card is clicked
 	std::vector<sPtr<Card>>::iterator it = std::find_if(m_cards.begin(), m_cards.end(), [&mousePosition](sPtr<Card>& card)
-	{ return (card->setBackSprite().getGlobalBounds().contains((float)mousePosition.x, (float)mousePosition.y) && card->inactive()); });
+	{ return (card->inactive() && card->setBackSprite().getGlobalBounds().contains((float)mousePosition.x, (float)mousePosition.y)); });
 	return it != m_cards.end() ? (*it).get() : nullptr;
 }
 
@@ -62,7 +62,7 @@ bool Deck::pickCards(Card* card, Player& player, sf::Time& elapsedTime)
 {   
 	if (m_cardPick[0] == nullptr)
 	{
-		m_cardPick[0] = card;  
+		m_cardPick[0] = card;
 		m_cardPick[0]->isShown(true);
 	}
 	else if (m_cardPick[0] != nullptr && m_cardPick[1] == nullptr)
@@ -84,8 +84,9 @@ bool Deck::unmatched(sf::Time &elapsedTime)
 			m_cardPick[1]->isShown(false);
 			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::unmatchedSound);
 		}  
+		return true;
 	}
-	return true;
+	else return false;
 }
 
 bool Deck::matched(Player& player)
@@ -97,10 +98,11 @@ bool Deck::matched(Player& player)
 			player.matchingCards++;
 			m_cardPick[0]->isShown(true);
 			m_cardPick[1]->isShown(true);  
-			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::matchedSound); 
-		}  
-	}
-	return true;
+			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::matchedSound);
+		}
+		return true;
+	} 
+	else return false;
 }
 
 void Deck::clearChoices()
@@ -116,11 +118,7 @@ void Deck::drawDeck()
 		card->draw();
 	}
 }
-
-void Deck::update(sf::Time& elapsedTime) 
-{ 
-}
-
+ 
 Deck::~Deck()
 {
 }

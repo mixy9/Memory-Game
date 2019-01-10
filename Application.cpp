@@ -86,7 +86,7 @@ void Application::endGame()
 	deck.resetCards();
 	deck.clearChoices();
 	player.update(delta);
-	if (menu.textClick())
+	if (menu.textClick() && !menu.quitRect())
 	{ 
 		SoundManager::getInstance()->playMusic(Filename::musicFilename);
 	}
@@ -95,11 +95,7 @@ void Application::endGame()
 void Application::updatePlaying()
 {
 	delta = clock.getElapsedTime();
-	player.update(delta);
-	if (pCard != nullptr)
-	{ 
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
-	}
+	player.update(delta); 
 }
 
 void Application::processEvents()
@@ -145,7 +141,7 @@ void Application::processEvents()
 				}
 			}
 			else if (gameState == GameState::PLAYING)
-			{
+			{ 
 				pCard = deck.clickCard(mouseWorldPosition);
 				if (pCard && deck.pickCards(pCard, player, delta))
 				{ 

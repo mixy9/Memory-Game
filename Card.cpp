@@ -16,7 +16,7 @@ Card::Card(sPtr<SpriteNode>& cardSprite, size_t cardNumber) :
 }
 
 sf::Sprite& Card::setBackSprite()
-{
+{ 
 	return *m_backSprite;
 }
 
