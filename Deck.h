@@ -15,7 +15,7 @@ public:
 
 	Deck();
 
-	void display();
+	void addCards();
 	void resetCards();
 	void shuffleCards();
 

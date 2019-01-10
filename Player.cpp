@@ -91,6 +91,7 @@ void Player::resetScore()
 
 bool Player::allMatching()
 {
+	// Detect if game is over
 	return matchingCards == 12;
 }
 

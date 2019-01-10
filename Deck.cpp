@@ -23,11 +23,12 @@ void Deck::initialize()
 	}
 }
 
-void Deck::display()
+void Deck::addCards()
 {
-	for (size_t i = 1; i <= m_numberOfCards; ++i)
+	// Fill the deck
+	for (size_t i = 0; i < m_numberOfCards; ++i)
 	{    
-		m_cards.push_back(std::make_shared<Card>(m_backSprite, (i + 1) / 2));
+		m_cards.push_back(std::make_shared<Card>(m_backSprite, i / 2));
 	}
 }
 
@@ -44,7 +45,7 @@ void Deck::resetCards()
 
 void Deck::shuffleCards()
 {
-	// Returns and counts a time point representing the current point in time
+	// Returns and counts a time point representing the current point in time and shuffles the deck 
 	auto seed = std::chrono::system_clock::now().time_since_epoch().count();
 	std::shuffle(m_cards.begin(), m_cards.end(), std::default_random_engine(static_cast<unsigned>(seed)));
 }
@@ -53,7 +54,7 @@ Card* Deck::clickCard(sf::Vector2f& mousePosition)
 {
 	// Check if a card is clicked
 	std::vector<sPtr<Card>>::iterator it = std::find_if(m_cards.begin(), m_cards.end(), [&mousePosition](sPtr<Card>& card)
-	{ return (card->setBackSprite().getGlobalBounds().contains((float)mousePosition.x, (float)mousePosition.y) && card->isActive()); });
+	{ return (card->setBackSprite().getGlobalBounds().contains((float)mousePosition.x, (float)mousePosition.y) && card->inactive()); });
 	return it != m_cards.end() ? (*it).get() : nullptr;
 }
 
@@ -62,14 +63,13 @@ bool Deck::pickCards(Card* card, Player& player, sf::Time& elapsedTime)
 	if (m_cardPick[0] == nullptr)
 	{
 		m_cardPick[0] = card;  
+		m_cardPick[0]->isShown(true);
 	}
 	else if (m_cardPick[0] != nullptr && m_cardPick[1] == nullptr)
 	{ 
-		m_cardPick[1] = card; 
-		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber())
-		{
-			player.movesCounter++;
-		}
+		m_cardPick[1] = card;
+		m_cardPick[1]->isShown(true);
+		player.movesCounter++;
 	}  
 	else return false;
 }
@@ -80,8 +80,8 @@ bool Deck::unmatched(sf::Time &elapsedTime)
 	{
 		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber())
 		{
-			m_cardPick[0]->animateCardFlip(elapsedTime, true);
-			m_cardPick[1]->animateCardFlip(elapsedTime, true); 
+			m_cardPick[0]->isShown(false);
+			m_cardPick[1]->isShown(false);
 			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::unmatchedSound);
 		}  
 	}
@@ -118,15 +118,7 @@ void Deck::drawDeck()
 }
 
 void Deck::update(sf::Time& elapsedTime) 
-{
-	if (m_cardPick[0] != nullptr)
-	{
-		m_cardPick[0]->animateCardFlip(elapsedTime, false);
-	}
-	if (m_cardPick[1] != nullptr)
-	{ 
-		m_cardPick[1]->animateCardFlip(elapsedTime, false); 
-	}  
+{ 
 }
 
 Deck::~Deck()

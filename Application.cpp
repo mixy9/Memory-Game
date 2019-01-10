@@ -26,7 +26,7 @@ bool Application::initialize()
 
 	pCard = nullptr;
 	menu.initialize();
-	deck.display();
+	deck.addCards();
 	deck.shuffleCards();
 	player.initialize();
 
@@ -96,7 +96,10 @@ void Application::updatePlaying()
 {
 	delta = clock.getElapsedTime();
 	player.update(delta);
-	deck.update(delta);
+	if (pCard != nullptr)
+	{ 
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	}
 }
 
 void Application::processEvents()
