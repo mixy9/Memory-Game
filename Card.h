@@ -2,13 +2,13 @@
 
 #include "ResourceHolder.h"
 #include "SpriteNode.h"
-#include "SceneNode.h"
+#include "GameObject.h"
 
 
 
-class Card : public SceneNode
+class Card : public GameObject
 {
-protected: 
+protected:  
 	bool m_showCard;
 	size_t m_number;
 	sf::Clock m_clock;
@@ -24,9 +24,10 @@ public:
 	sf::Sprite& setFrontSprite();
 	
 	void setPosition(float posX, float posY);
-	void animateCardFlip(sf::Time& elapsedTime, bool show);
-
+	void animateCardFlip(sf::Time& elapsedTime);
+ 
 	int getNumber();
+
 	bool inactive();
 	bool isShown(bool show);
 

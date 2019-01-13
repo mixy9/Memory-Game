@@ -166,7 +166,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceHolder.h" />
-    <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteNode.h" />
     <ClInclude Include="stdafx.h" />
@@ -180,7 +180,7 @@
     <ClCompile Include="MemoryGame.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -1,5 +1,5 @@
 #include "Deck.h"
-
+ 
 
 Deck::Deck() :
 	m_rows(6),
@@ -91,6 +91,7 @@ bool Deck::checkMatching(sf::Time& elapsedTime, Player& player)
 			m_cardPick[1]->isShown(true);
 			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::matchedSound); 
 		} 
+		clearChoices();
 	}
 	else return false;
 }
@@ -113,12 +114,12 @@ void Deck::update(sf::Time& elapsedTime)
 {
 	if (m_cardPick[0] != nullptr)
 	{
-		m_cardPick[0]->animateCardFlip(elapsedTime, false);
+		m_cardPick[0]->animateCardFlip(elapsedTime);
 	}
 	if (m_cardPick[1] != nullptr)
 	{ 
-		m_cardPick[1]->animateCardFlip(elapsedTime, false);
-	}  
+		m_cardPick[1]->animateCardFlip(elapsedTime);
+	}   
 }
 
 Deck::~Deck()

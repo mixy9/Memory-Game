@@ -2,13 +2,13 @@
 
 #include "stdafx.h"
 #include "TextNode.h"
-#include "SceneNode.h"
+#include "GameObject.h"
 #include "SpriteNode.h"
 #include "ResourceHolder.h"
 
 
 
-class Player :  public SceneNode
+class Player :  public GameObject
 {
 protected:
 	sPtr<SpriteNode> m_paper;

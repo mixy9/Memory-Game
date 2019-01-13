@@ -48,37 +48,34 @@ void Application::update()
 	}
 	else if (gameState == GameState::END)
 	{
-		endGame();
+		updateEnd();
 	}
 }
 
 void Application::display()
 {
+	menu.draw();
 	switch (gameState)
 	{
 	case GameState::INTRO:
-		menu.draw();
 		menu.drawIntro();
 		break;
-	case GameState::PLAYER_INPUT:
-		menu.draw();
+	case GameState::PLAYER_INPUT: 
 		player.draw();
 		menu.drawInput();
 		break;
-	case GameState::PLAYING:
-		menu.draw(); 
+	case GameState::PLAYING: 
 		deck.draw();
 		player.drawHud();
 		break;
-	case GameState::END:
-		menu.draw();
+	case GameState::END: 
 		menu.drawEnd();
 		player.drawResult();
 		break;
 	}
 }
 
-void Application::endGame()
+void Application::updateEnd()
 {
 	SoundManager::getInstance()->stopMusic();
 	player.rating();
@@ -102,7 +99,7 @@ void Application::processEvents()
 	while (Screen::window.pollEvent(Event))
 	{
 		if ((Event.type == sf::Event::Closed) || (Event.type == sf::Event::KeyPressed)
-			&& (Event.key.code == sf::Keyboard::Escape))
+		    && (Event.key.code == sf::Keyboard::Escape))
 		{
 			Screen::window.close();
 		} 
@@ -110,16 +107,15 @@ void Application::processEvents()
 		{
 			pCard && gameState == GameState::PLAYING 
 			? SoundManager::getInstance()->playSound(Resource::Sounds, Filename::cardFlip)
-			: SoundManager::getInstance()->playSound(Resource::Sounds, Filename::clickSound); 
-
+			: SoundManager::getInstance()->playSound(Resource::Sounds, Filename::clickSound);   
 			if (deck.checkMatching(delta, player))
 			{ 
-				deck.clearChoices();
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 				if (player.allMatching())
 				{
 					gameState = GameState::END;
 				}
-			}
+			}  
 		}
 		if ((Event.type == sf::Event::MouseButtonPressed) && (Event.mouseButton.button == sf::Mouse::Left))
 		{
@@ -144,17 +140,14 @@ void Application::processEvents()
 			{
 				if (menu.textClick())
 				{
-					gameState = GameState::PLAYING;
 					deck.initialize();
+					gameState = GameState::PLAYING; 
 				}
 			}
 			else if (gameState == GameState::PLAYING)
 			{ 
 				pCard = deck.clickCard(mouseWorldPosition);
-				if (pCard && deck.pickCards(pCard, player, delta))
-				{
-					pCard->inactive();
-				}
+				pCard && deck.pickCards(pCard, player, delta);
 			}
 			else if (gameState == GameState::END)
 			{
@@ -167,8 +160,8 @@ void Application::processEvents()
 					else
 					{
 						gameState = GameState::PLAYER_INPUT;
-						menu.isMusicOn();
 						player.clearPlayerInput();
+						menu.isMusicOn(true);
 						player.resetScore();
 						deck.resetCards();
 					}

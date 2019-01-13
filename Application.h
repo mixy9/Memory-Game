@@ -41,7 +41,7 @@ public:
 
 	void update();
 	void display();
-	void endGame();
+	void updateEnd();
 	void updatePlaying();
 	void processEvents();
 

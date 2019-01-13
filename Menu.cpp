@@ -16,12 +16,12 @@ void Menu::initialize()
 	backgroundSprite->setScale(Screen::screenWidth / backgroundSprite->getLocalBounds().width, Screen::screenHeight / backgroundSprite->getLocalBounds().height);
 	
 	okay = std::make_shared<TextNode>(OK_BUTTON, 12u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
+	end = std::make_shared<TextNode>(END_TEXT, 20u, 3.9f, 3.2f, sf::Color::White, Filename::font2);
 	quit = std::make_shared<TextNode>(QUIT_BUTTON, 18u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
 	play = std::make_shared<TextNode>(PLAY_BUTTON, 18u, 2.3f, 1.77f, sf::Color::White, Filename::font2);
 	game = std::make_shared<TextNode>(GAME_TEXT, 9u, 2.7f, 3.f, sf::Color(96, 69, 35), Filename::font2);
 	repeat = std::make_shared<TextNode>(REPEAT_BUTTON, 18u, 2.6f, 1.6f, sf::Color::White, Filename::font2);
 	title = std::make_shared<TextNode>(TITLE_TEXT, 6u, 4.7f, 9.4f, sf::Color(219, 139, 41), Filename::font1);
-	theEnd = std::make_shared<TextNode>(END_TEXT, 20u, 3.9f, 3.2f, sf::Color::White, Filename::font2);
 
 	title->setOutlineThickness(7.5f);
 	title->setOutlineColor(sf::Color::White);
@@ -46,9 +46,9 @@ bool Menu::textClick()
 	return it != m_menuButtons.end() ? (*it).get() : nullptr;
 }
 
-bool Menu::isMusicOn()
+bool Menu::isMusicOn(bool button)
 {
-	return m_isMusicOn = true;
+	return m_isMusicOn = button;
 }
 
 bool Menu::mouseHover(sPtr<TextNode> text)
@@ -79,8 +79,8 @@ void Menu::drawEnd()
 {
 	header();
 	Screen::window.draw(*repeat);
-	Screen::window.draw(*theEnd);
 	Screen::window.draw(*quit);
+	Screen::window.draw(*end);
 }
 
 void Menu::drawInput()
@@ -106,11 +106,11 @@ void Menu::musicSwitch()
 	if (m_isMusicOn && (on.contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y)))
 	{
 		SoundManager::getInstance()->pauseMusic();
-		m_isMusicOn = false;
+		isMusicOn(false);
 	}
 	else if (!m_isMusicOn && (off.contains(m_mouseWorldPosition.x, m_mouseWorldPosition.y))) {
 		SoundManager::getInstance()->playMusic(Filename::musicFilename);
-		m_isMusicOn = true;
+		isMusicOn(true);
 	}
 }
 

@@ -1,17 +1,17 @@
 #pragma once
 
 #include "TextNode.h"
-#include "SceneNode.h"
+#include "GameObject.h"
 #include "SpriteNode.h"
 #include "SoundManager.h"
 
 
 
-class Menu : public SceneNode
+class Menu : public GameObject
 {
 private:
 	std::vector<sPtr<TextNode>> m_menuButtons;
-	sPtr<TextNode> okay, quit, play, game, title, repeat, theEnd;
+	sPtr<TextNode> okay, quit, play, game, title, repeat, end;
 	sPtr<SpriteNode> menuSprite, backgroundSprite, introBG, soundSprite, noSoundSprite;
 
 	sf::Vector2f m_mouseWorldPosition;
@@ -23,11 +23,9 @@ private:
 public:	
 	Menu();	
 
-	virtual void initialize();
-
 	bool quitRect();
 	bool textClick();
-	bool isMusicOn();
+	bool isMusicOn(bool button);
 	bool mouseHover(sPtr<TextNode> text);
 
 	void header();
@@ -37,6 +35,7 @@ public:
 	void musicSwitch();
 
 	virtual void draw();
+	virtual void initialize();
 	virtual void update(sf::Time& elapsedTime);
 
 	~Menu();

@@ -31,14 +31,14 @@ void Card::setPosition(float posX, float posY)
 	m_frontSprite->setPosition(posX, posY);
 }
 
-void Card::animateCardFlip(sf::Time& elapsedTime, bool show)
+void Card::animateCardFlip(sf::Time& elapsedTime)
 {
 	sf::Time delta = m_clock.restart();
 	const sf::Time spinTime = sf::milliseconds(500);
 	const sf::Time halfSpinTime = spinTime / 2.f;
 	sf::Time currentTime = sf::Time::Zero;
 	m_backSprite->setScale(Screen::cardWidht, Screen::cardHeight); 
-	if (m_showCard == show)
+	if (m_showCard == false)
 	{
 		if (currentTime < spinTime - delta)
 			currentTime += delta;
@@ -54,7 +54,7 @@ void Card::animateCardFlip(sf::Time& elapsedTime, bool show)
 		float angle = std::sin(scale * PI() / 2.f);
 		m_backSprite->setScale(angle * (Screen::cardWidht / 2), Screen::cardHeight);
 		m_backSprite->move(angle * 20.f, 0.f);
-		this->isShown(show);
+		this->isShown(false);
 	}
 	else
 	{
@@ -63,10 +63,10 @@ void Card::animateCardFlip(sf::Time& elapsedTime, bool show)
 		float angle = std::sin(scale * PI() / 2.f);
 		m_frontSprite->setScale(angle * Screen::cardWidht, Screen::cardHeight);
 		m_backSprite->move(angle * -20.f, 0.f);
-		this->isShown(!show);
+		this->isShown(true);
 	}
 }
-
+ 
 int Card::getNumber()
 {
 	return m_number;
