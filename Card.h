@@ -24,6 +24,7 @@ public:
 	sf::Sprite& setFrontSprite();
 	
 	void setPosition(float posX, float posY);
+	void animateCardFlip(sf::Time& elapsedTime, bool show);
 
 	int getNumber();
 	bool inactive();

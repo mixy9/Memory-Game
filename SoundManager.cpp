@@ -23,8 +23,8 @@ void SoundManager::playSound(Resource::ID id, std::string filename)
 	m_soundBuffer.load(id, filename);
 	m_sound.setBuffer(*m_soundBuffer.get(filename));
 	m_sound.play();
-	m_sound.setPitch(3);
-	m_sound.setVolume(20); 
+	m_sound.setPitch(2);
+	m_sound.setVolume(20);   
 }
 
 void SoundManager::playMusic(std::string filename)
@@ -35,7 +35,7 @@ void SoundManager::playMusic(std::string filename)
 			throw std::runtime_error("Error! Failed to open file " + filename);
 		m_music.play(); 
 		m_music.setVolume(20);
-		m_music.setLoop(true);		
+		m_music.setLoop(true);	 
 	}
 }
 

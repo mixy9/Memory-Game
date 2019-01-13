@@ -67,7 +67,7 @@ void Application::display()
 		break;
 	case GameState::PLAYING:
 		menu.draw(); 
-		deck.drawDeck();
+		deck.draw();
 		player.drawHud();
 		break;
 	case GameState::END:
@@ -83,8 +83,6 @@ void Application::endGame()
 	SoundManager::getInstance()->stopMusic();
 	player.rating();
 	clock.restart();
-	deck.resetCards();
-	deck.clearChoices();
 	player.update(delta);
 	if (menu.textClick() && !menu.quitRect())
 	{ 
@@ -96,6 +94,7 @@ void Application::updatePlaying()
 {
 	delta = clock.getElapsedTime();
 	player.update(delta); 
+	deck.update(delta); 
 }
 
 void Application::processEvents()
@@ -106,12 +105,20 @@ void Application::processEvents()
 			&& (Event.key.code == sf::Keyboard::Escape))
 		{
 			Screen::window.close();
-		}
+		} 
 		if ((Event.type == sf::Event::MouseButtonReleased))
 		{
 			pCard && gameState == GameState::PLAYING 
 			? SoundManager::getInstance()->playSound(Resource::Sounds, Filename::cardFlip)
 			: SoundManager::getInstance()->playSound(Resource::Sounds, Filename::clickSound); 
+			if (deck.checkMatching(delta, player))
+			{
+				deck.clearChoices();
+				if (player.allMatching())
+				{
+					gameState = GameState::END;
+				}
+			}
 		}
 		if ((Event.type == sf::Event::MouseButtonPressed) && (Event.mouseButton.button == sf::Mouse::Left))
 		{
@@ -144,18 +151,9 @@ void Application::processEvents()
 			{ 
 				pCard = deck.clickCard(mouseWorldPosition);
 				if (pCard && deck.pickCards(pCard, player, delta))
-				{ 
-					deck.matched(player);
-					if (player.allMatching())
-					{
-						gameState = GameState::END;
-					}
-				}
-				else if (pCard && deck.unmatched(delta))
 				{
-					deck.clearChoices(); 
-					deck.pickCards(pCard, player, delta);
-				} 
+				}
+				else return; 
 			}
 			else if (gameState == GameState::END)
 			{
@@ -171,6 +169,7 @@ void Application::processEvents()
 						menu.isMusicOn();
 						player.clearPlayerInput();
 						player.resetScore();
+						deck.resetCards();
 					}
 				}
 			}

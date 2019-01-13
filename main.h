@@ -13,6 +13,9 @@ namespace Screen
 
 	unsigned int screenWidth = sf::VideoMode::getDesktopMode().width;
 	unsigned int screenHeight = sf::VideoMode::getDesktopMode().height;
+
+	float cardWidht = Screen::screenWidth / 2101.53f;
+	float cardHeight = Screen::screenHeight / 1129.41f;
 }
 
 

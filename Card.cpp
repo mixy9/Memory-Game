@@ -31,6 +31,42 @@ void Card::setPosition(float posX, float posY)
 	m_frontSprite->setPosition(posX, posY);
 }
 
+void Card::animateCardFlip(sf::Time& elapsedTime, bool show)
+{
+	sf::Time delta = m_clock.restart();
+	const sf::Time spinTime = sf::milliseconds(500);
+	const sf::Time halfSpinTime = spinTime / 2.f;
+	sf::Time currentTime = sf::Time::Zero;
+	m_backSprite->setScale(Screen::cardWidht, Screen::cardHeight); 
+	if (m_showCard == show)
+	{
+		if (currentTime < spinTime - delta)
+			currentTime += delta;
+		else
+		{
+			currentTime = spinTime; 
+		}
+	} 
+	m_showCard = currentTime >= halfSpinTime;
+	if (m_showCard)
+	{ 
+		float scale = (currentTime - halfSpinTime) / halfSpinTime;
+		float angle = std::sin(scale * PI() / 2.f);
+		m_backSprite->setScale(angle * (Screen::cardWidht / 2), Screen::cardHeight);
+		m_backSprite->move(angle * 20.f, 0.f);
+		this->isShown(show);
+	}
+	else
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+		float scale = 1.f - currentTime / halfSpinTime;
+		float angle = std::sin(scale * PI() / 2.f);
+		m_frontSprite->setScale(angle * Screen::cardWidht, Screen::cardHeight);
+		m_backSprite->move(angle * -20.f, 0.f);
+		this->isShown(!show);
+	}
+}
+
 int Card::getNumber()
 {
 	return m_number;

@@ -8,13 +8,13 @@ Menu::Menu() :
 }
 
 void Menu::initialize()
-{
+{ 
 	menuSprite = std::make_shared<SpriteNode>(Filename::menu, 2.9f, 1.9f, 3902.85f, 2194.28f);
 	soundSprite = std::make_shared<SpriteNode>(Filename::sound, 1.09f, 19.f, 1366.f, 768.f);
 	noSoundSprite = std::make_shared<SpriteNode>(Filename::noSound, 1.09f, 19.f, 1366.f, 768.f);
 	backgroundSprite = std::make_shared<SpriteNode>(Filename::background, Screen::screenWidth, Screen::screenHeight, NULL, NULL);
 	backgroundSprite->setScale(Screen::screenWidth / backgroundSprite->getLocalBounds().width, Screen::screenHeight / backgroundSprite->getLocalBounds().height);
-
+	
 	okay = std::make_shared<TextNode>(OK_BUTTON, 12u, 2.4f, 1.5f, sf::Color::White, Filename::font2);
 	quit = std::make_shared<TextNode>(QUIT_BUTTON, 18u, 2.3f, 1.36f, sf::Color::White, Filename::font2);
 	play = std::make_shared<TextNode>(PLAY_BUTTON, 18u, 2.3f, 1.77f, sf::Color::White, Filename::font2);
