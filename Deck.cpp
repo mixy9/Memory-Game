@@ -78,7 +78,7 @@ bool Deck::checkMatching(sf::Time& elapsedTime, Player& player)
 	if (m_cardPick[0] != nullptr && m_cardPick[1] != nullptr)
 	{
 		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber())
-		{
+		{ 
 			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::unmatchedSound);
 			m_cardPick[0]->isShown(false);
 			m_cardPick[1]->isShown(false);
@@ -116,7 +116,7 @@ void Deck::update(sf::Time& elapsedTime)
 		m_cardPick[0]->animateCardFlip(elapsedTime, false);
 	}
 	if (m_cardPick[1] != nullptr)
-	{
+	{ 
 		m_cardPick[1]->animateCardFlip(elapsedTime, false);
 	}  
 }

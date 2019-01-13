@@ -111,8 +111,9 @@ void Application::processEvents()
 			pCard && gameState == GameState::PLAYING 
 			? SoundManager::getInstance()->playSound(Resource::Sounds, Filename::cardFlip)
 			: SoundManager::getInstance()->playSound(Resource::Sounds, Filename::clickSound); 
+
 			if (deck.checkMatching(delta, player))
-			{
+			{ 
 				deck.clearChoices();
 				if (player.allMatching())
 				{
@@ -152,8 +153,8 @@ void Application::processEvents()
 				pCard = deck.clickCard(mouseWorldPosition);
 				if (pCard && deck.pickCards(pCard, player, delta))
 				{
+					pCard->inactive();
 				}
-				else return; 
 			}
 			else if (gameState == GameState::END)
 			{

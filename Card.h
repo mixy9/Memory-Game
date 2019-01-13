@@ -8,7 +8,7 @@
 
 class Card : public SceneNode
 {
-protected:
+protected: 
 	bool m_showCard;
 	size_t m_number;
 	sf::Clock m_clock;

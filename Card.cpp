@@ -90,7 +90,7 @@ void Card::draw()
 		Screen::window.draw(*m_frontSprite);
 	}
 	else 
-	{
+	{ 
 		Screen::window.draw(*m_backSprite);
 	}
 }
