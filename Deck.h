@@ -18,13 +18,12 @@ public:
 	void addCards();
 	void resetCards();
 	void shuffleCards();
+	void clearChoices();
 
 	Card* clickCard(sf::Vector2f& mousePosition);
 
-	bool pickCards(Card* card, Player& player, sf::Time& elapsedTime);
+	bool pickCards(Card* card, Player& player);
 	bool checkMatching(sf::Time& elapsedTime, Player& player);
-
-	void clearChoices();
 
 	virtual void draw();
 	virtual void initialize();

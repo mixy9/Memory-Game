@@ -1,5 +1,6 @@
 #include "Deck.h"
  
+int Card::m_ID = 0;
 
 Deck::Deck() :
 	m_rows(6),
@@ -51,6 +52,12 @@ void Deck::shuffleCards()
 	std::shuffle(m_cards.begin(), m_cards.end(), std::default_random_engine(static_cast<unsigned>(seed)));
 }
 
+void Deck::clearChoices()
+{
+	m_cardPick[0] = nullptr;
+	m_cardPick[1] = nullptr;
+}
+
 Card* Deck::clickCard(sf::Vector2f& mousePosition)
 {
 	// Check if a card is clicked
@@ -59,7 +66,7 @@ Card* Deck::clickCard(sf::Vector2f& mousePosition)
 	return it != m_cards.end() ? (*it).get() : nullptr;
 }
 
-bool Deck::pickCards(Card* card, Player& player, sf::Time& elapsedTime)
+bool Deck::pickCards(Card* card, Player& player)
 {   
 	if (m_cardPick[0] == nullptr)
 	{
@@ -84,8 +91,9 @@ bool Deck::checkMatching(sf::Time& elapsedTime, Player& player)
 			m_cardPick[1]->isShown(false);
 			initialize();
 		} 
-		else  
-		{ 
+		else  if (m_cardPick[0]->getNumber() == m_cardPick[1]->getNumber()
+			       && m_cardPick[0]->getID() != m_cardPick[1]->getID())
+		{  
 			player.matchingCards++;
 			m_cardPick[0]->isShown(true);
 			m_cardPick[1]->isShown(true);
@@ -94,12 +102,6 @@ bool Deck::checkMatching(sf::Time& elapsedTime, Player& player)
 		clearChoices();
 	}
 	else return false;
-}
-
-void Deck::clearChoices()
-{
-	m_cardPick[0] = nullptr;
-	m_cardPick[1] = nullptr;
 }
 
 void Deck::draw()

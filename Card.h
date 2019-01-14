@@ -8,8 +8,10 @@
 
 class Card : public GameObject
 {
-protected:  
+protected:
 	bool m_showCard;
+	static int m_ID;
+
 	size_t m_number;
 	sf::Clock m_clock;
 	std::string m_frontCardTexture;
@@ -22,14 +24,15 @@ public:
 
 	sf::Sprite& setBackSprite();
 	sf::Sprite& setFrontSprite();
-	
-	void setPosition(float posX, float posY);
-	void animateCardFlip(sf::Time& elapsedTime);
- 
+
+	int getID();
 	int getNumber();
 
 	bool inactive();
 	bool isShown(bool show);
+
+	void setPosition(float posX, float posY);
+	void animateCardFlip(sf::Time& elapsedTime);
 
 	virtual void draw();
 	virtual void initialize() {};

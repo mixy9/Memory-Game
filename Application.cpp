@@ -107,7 +107,7 @@ void Application::processEvents()
 		{
 			pCard && gameState == GameState::PLAYING 
 			? SoundManager::getInstance()->playSound(Resource::Sounds, Filename::cardFlip)
-			: SoundManager::getInstance()->playSound(Resource::Sounds, Filename::clickSound);   
+			: SoundManager::getInstance()->playSound(Resource::Sounds, Filename::clickSound); 
 			if (deck.checkMatching(delta, player))
 			{ 
 				std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -147,7 +147,7 @@ void Application::processEvents()
 			else if (gameState == GameState::PLAYING)
 			{ 
 				pCard = deck.clickCard(mouseWorldPosition);
-				pCard && deck.pickCards(pCard, player, delta);
+				pCard && deck.pickCards(pCard, player);
 			}
 			else if (gameState == GameState::END)
 			{
