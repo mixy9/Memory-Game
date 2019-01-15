@@ -27,6 +27,7 @@ sf::Sprite& Card::setFrontSprite()
 
 int Card::getID()
 {
+	// Each instance of the object requires a unique id
 	if (m_showCard == true)
 	return m_ID++;
 }
@@ -38,6 +39,7 @@ int Card::getNumber()
 
 bool Card::inactive()
 {
+	// Disable clicking on the front sprite
 	if (m_showCard == true)
 		return false;
 }
@@ -53,14 +55,14 @@ void Card::setPosition(float posX, float posY)
 	m_frontSprite->setPosition(posX, posY);
 }
 
-void Card::animateCardFlip(sf::Time& elapsedTime)
+void Card::animateCardFlip(sf::Time& elapsedTime, bool show)
 {
 	sf::Time delta = m_clock.restart();
 	const sf::Time spinTime = sf::milliseconds(500);
 	const sf::Time halfSpinTime = spinTime / 2.f;
 	sf::Time currentTime = sf::Time::Zero;
 	m_backSprite->setScale(Screen::cardWidht, Screen::cardHeight);
-	if (m_showCard == false)
+	if (m_showCard == show)
 	{
 		if (currentTime < spinTime - delta)
 			currentTime += delta;
@@ -75,7 +77,7 @@ void Card::animateCardFlip(sf::Time& elapsedTime)
 		float scale = (currentTime - halfSpinTime) / halfSpinTime;
 		m_backSprite->setScale(std::sin(scale * PI() / 2.f) * (Screen::cardWidht / 2), Screen::cardHeight);
 		m_backSprite->move(std::sin(scale * PI() / 2.f) * 20.f, 0.f);
-		this->isShown(false);
+		this->isShown(show);
 	}
 	else
 	{
@@ -83,7 +85,7 @@ void Card::animateCardFlip(sf::Time& elapsedTime)
 		float scale = 1.f - currentTime / halfSpinTime;
 		m_frontSprite->setScale(std::sin(scale * PI() / 2.f) * Screen::cardWidht, Screen::cardHeight);
 		m_backSprite->move(std::sin(scale * PI() / 2.f) * -20.f, 0.f);
-		this->isShown(true);
+		this->isShown(!show);
 	}
 }
 
@@ -97,6 +99,10 @@ void Card::draw()
 	{ 
 		Screen::window.draw(*m_backSprite);
 	}
+}
+
+void Card::update(sf::Time& elapsedTime)
+{ 
 }
 
 Card::~Card()

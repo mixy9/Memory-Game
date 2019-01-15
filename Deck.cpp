@@ -70,7 +70,8 @@ bool Deck::pickCards(Card* card, Player& player)
 {   
 	if (m_cardPick[0] == nullptr)
 	{
-		m_cardPick[0] = card; 
+		m_cardPick[0] = card;
+		card->inactive();
 	}
 	else if (m_cardPick[0] != nullptr && m_cardPick[1] == nullptr)
 	{ 
@@ -80,25 +81,26 @@ bool Deck::pickCards(Card* card, Player& player)
 	else return false;
 }
 
-bool Deck::checkMatching(sf::Time& elapsedTime, Player& player)
+bool Deck::checkMatching(Player& player)
 {
 	if (m_cardPick[0] != nullptr && m_cardPick[1] != nullptr)
 	{
-		if (m_cardPick[0]->getNumber() != m_cardPick[1]->getNumber())
-		{ 
-			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::unmatchedSound);
-			m_cardPick[0]->isShown(false);
-			m_cardPick[1]->isShown(false);
-			initialize();
-		} 
-		else  if (m_cardPick[0]->getNumber() == m_cardPick[1]->getNumber()
-			       && m_cardPick[0]->getID() != m_cardPick[1]->getID())
-		{  
-			player.matchingCards++;
+		if (m_cardPick[0]->getNumber() == m_cardPick[1]->getNumber()
+			 && m_cardPick[0]->getID() != m_cardPick[1]->getID())
+		{
+			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::matchedSound);
 			m_cardPick[0]->isShown(true);
 			m_cardPick[1]->isShown(true);
-			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::matchedSound); 
-		} 
+			player.matchingCards++;
+		} 		
+		else 
+		{
+			initialize();
+			m_cardPick[0]->isShown(false);
+			m_cardPick[1]->isShown(false);
+			SoundManager::getInstance()->playSound(Resource::Sounds, Filename::unmatchedSound);
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		clearChoices();
 	}
 	else return false;
@@ -115,13 +117,13 @@ void Deck::draw()
 void Deck::update(sf::Time& elapsedTime)
 {
 	if (m_cardPick[0] != nullptr)
-	{
-		m_cardPick[0]->animateCardFlip(elapsedTime);
+	{ 
+		m_cardPick[0]->animateCardFlip(elapsedTime, false);
 	}
 	if (m_cardPick[1] != nullptr)
 	{ 
-		m_cardPick[1]->animateCardFlip(elapsedTime);
-	}   
+		m_cardPick[1]->animateCardFlip(elapsedTime, false);
+	} 
 }
 
 Deck::~Deck()

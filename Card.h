@@ -17,7 +17,7 @@ protected:
 	std::string m_frontCardTexture;
 	ResourceHolder<sf::Texture> m_texture;
 	sPtr<SpriteNode> m_frontSprite, m_backSprite; 
-
+	
 public: 
 	Card();	
 	Card(sPtr<SpriteNode>& cardSprite, size_t cardNumber);
@@ -32,11 +32,11 @@ public:
 	bool isShown(bool show);
 
 	void setPosition(float posX, float posY);
-	void animateCardFlip(sf::Time& elapsedTime);
+	void animateCardFlip(sf::Time& elapsedTime, bool show);
 
 	virtual void draw();
 	virtual void initialize() {};
-	virtual void update(sf::Time& elapsedTime) {};
+	virtual void update(sf::Time& elapsedTime);
 
 	~Card();
 };

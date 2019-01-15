@@ -23,7 +23,7 @@ public:
 	Card* clickCard(sf::Vector2f& mousePosition);
 
 	bool pickCards(Card* card, Player& player);
-	bool checkMatching(sf::Time& elapsedTime, Player& player);
+	bool checkMatching(Player& player);
 
 	virtual void draw();
 	virtual void initialize();
