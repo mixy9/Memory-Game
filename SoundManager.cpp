@@ -20,11 +20,12 @@ SoundManager* SoundManager::getInstance()
 
 void SoundManager::playSound(Resource::ID id, std::string filename)
 {
+	m_sound = std::make_shared<sf::Sound>();
 	m_soundBuffer.load(id, filename);
-	m_sound.setBuffer(*m_soundBuffer.get(filename));
-	m_sound.play();
-	m_sound.setPitch(2);
-	m_sound.setVolume(20);   
+	m_sound->setBuffer(*m_soundBuffer.get(filename));
+	m_sound->play();
+	m_sound->setPitch(2);
+	m_sound->setVolume(20);   
 }
 
 void SoundManager::playMusic(std::string filename)

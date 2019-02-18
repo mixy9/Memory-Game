@@ -12,7 +12,7 @@ private:
 
 	static SoundManager* instance;
 
-	sf::Sound m_sound;
+	sPtr<sf::Sound> m_sound;
 	sf::Music m_music;
 
 	SoundManager();
