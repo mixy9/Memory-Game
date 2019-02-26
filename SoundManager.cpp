@@ -33,10 +33,15 @@ void SoundManager::playMusic(std::string filename)
 	if (isPlaying())
 	{
 		if (!m_music.openFromFile(filename))
+		{
 			throw std::runtime_error("Error! Failed to open file " + filename);
-		m_music.play(); 
-		m_music.setVolume(20);
-		m_music.setLoop(true);	 
+		}
+		else 
+		{ 
+			m_music.play();
+			m_music.setVolume(20);
+			m_music.setLoop(true);
+		}
 	}
 }
 

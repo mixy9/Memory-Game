@@ -62,7 +62,7 @@ Card* Deck::clickCard(sf::Vector2f& mousePosition)
 {
 	// Check if a card is clicked
 	std::vector<sPtr<Card>>::iterator it = std::find_if(m_cards.begin(), m_cards.end(), [&mousePosition](sPtr<Card>& card)
-	{ return (card->setBackSprite().getGlobalBounds().contains((float)mousePosition.x, (float)mousePosition.y) && card->inactive()); });
+	{ return ((card->setBackSprite().getGlobalBounds().contains((float)mousePosition.x, (float)mousePosition.y)) && (card->inactive())); });
 	return it != m_cards.end() ? (*it).get() : nullptr;
 }
 
@@ -70,8 +70,7 @@ bool Deck::pickCards(Card* card, Player& player)
 {   
 	if (m_cardPick[0] == nullptr)
 	{
-		m_cardPick[0] = card;
-		card->inactive();
+		m_cardPick[0] = card; 
 	}
 	else if (m_cardPick[0] != nullptr && m_cardPick[1] == nullptr)
 	{ 

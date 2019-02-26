@@ -17,7 +17,7 @@ class ResourceHolder
 {
 private:
 	
-	std::map<std::string, std::shared_ptr<T>> resources;
+	std::unordered_map<std::string, std::shared_ptr<T>> m_resources;
 
 public:
 
@@ -26,14 +26,16 @@ public:
 		// Load the resource from a file on disk
 		T resource;
 		if (!resource.loadFromFile(filename))
+		{
 			throw std::runtime_error("Error! Failed to open file " + filename);
-		resources.emplace(filename, std::make_shared<T>(resource));
+		}
+		m_resources.emplace(filename, std::make_shared<T>(resource));
 	}
 
 	const std::shared_ptr<T>& get(cStr &filename)
 	{
 		// Get the source
-		return resources[filename];
+		return m_resources[filename];
 	}
 
 };

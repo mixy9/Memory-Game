@@ -11,8 +11,8 @@ Card::Card(sPtr<SpriteNode>& cardSprite, size_t cardNumber) :
 	m_showCard(false)
 {
 	m_frontCardTexture = "Graphics/Cards/" + std::to_string(cardNumber) + ".png";
+	m_frontSprite = std::make_shared<SpriteNode>(m_frontCardTexture, NULL, NULL, 2101.53f, 1129.41f);
 	m_backSprite = std::make_shared<SpriteNode>(Filename::backCard, NULL, NULL, 2101.53f, 1129.41f);
-	m_frontSprite = std::make_shared<SpriteNode>(m_frontCardTexture, NULL, NULL, 2101.53f, 1129.41f);	
 }
 
 sf::Sprite& Card::setBackSprite()
@@ -29,7 +29,7 @@ int Card::getID()
 {
 	// Each instance of the object requires a unique id
 	if (m_showCard == true)
-	return m_ID++;
+	    return m_ID++;
 }
 
 int Card::getNumber()
